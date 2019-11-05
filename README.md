@@ -5,6 +5,7 @@
     <p align="center">Reactive Systems Boilerplate for Java.</p>
     <p align="center">
         <a href="https://travis-ci.org/Clivern/Reindeer"><img src="https://travis-ci.org/Clivern/Reindeer.svg?branch=master"></a>
+            <a href="https://github.com/Clivern/Reindeer/releases"><img src="https://img.shields.io/badge/Version-v0.0.1-blue.svg"></a>
         <a href="https://github.com/Clivern/Reindeer/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-Apache_2.0-orange.svg"></a>
     </p>
 </p>
