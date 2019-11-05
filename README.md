@@ -13,7 +13,7 @@
 
 ## Documentation
 
-### Installation
+### Getting Started
 
 ```bash
 #
