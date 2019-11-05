@@ -90,6 +90,12 @@ coverage:
 	$(GRADLEW) jacocoTestReport --info
 
 
+## run: Run the App
+run:
+	@echo ">> ============= Run the Application ============= <<"
+	$(GRADLEW) run
+
+
 ## ci: Run all CI tests.
 ci: check verify
 	@echo "\n==> All quality checks passed"

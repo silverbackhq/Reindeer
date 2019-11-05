@@ -12,12 +12,12 @@
 * the License.
 */
 
-
 plugins {
     id 'java'
     id 'application'
     id 'jacoco'
     id 'com.diffplug.gradle.spotless' version '3.24.3'
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
 }
 
 spotless {
@@ -29,24 +29,55 @@ spotless {
     }
 }
 
+group = 'com.clivern'
+version = '0.0.1-SNAPSHOT'
+
 repositories {
-    // Use jcenter for resolving dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
     mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
-dependencies {
-    // This dependency is used by the application.
-    implementation 'com.google.guava:guava:27.1-jre'
-    implementation 'io.vertx:vertx-web:3.8.3'
-
-    // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+ext {
+    vertxVersion = '3.8.3'
+    junitJupiterEngineVersion = '5.4.0'
 }
 
 application {
-    // Define the main class for the application
-    mainClassName = 'com.clivern.reindeer.App'
+    mainClassName = 'io.vertx.core.Launcher'
+}
+
+sourceCompatibility = '1.8'
+
+def mainVerticleName = 'com.clivern.reindeer.App'
+def watchForChange = 'src/**/*'
+def doOnChange = './gradlew classes'
+
+dependencies {
+    implementation "io.vertx:vertx-web:$vertxVersion"
+
+    testImplementation "io.vertx:vertx-junit5:$vertxVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterEngineVersion"
+    testImplementation 'junit:junit:4.12'
+}
+
+
+shadowJar {
+    classifier = 'fat'
+    manifest {
+        attributes 'Main-Verticle': mainVerticleName
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'PASSED', 'FAILED', 'SKIPPED'
+    }
+}
+
+run {
+    args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
 }

@@ -13,24 +13,30 @@
  */
 package com.clivern.reindeer;
 
-import io.vertx.core.Vertx;
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Promise;
 
 /** Main Class */
-public class App {
+public class App extends AbstractVerticle {
 
-    public String getGreeting() {
-        return "Hello From Reindeer!";
-    }
-
-    public static void main(String[] args) {
-        Vertx.vertx()
-                .createHttpServer()
+    @Override
+    public void start(Promise<Void> startPromise) throws Exception {
+        vertx.createHttpServer()
                 .requestHandler(
                         req -> {
                             req.response()
                                     .putHeader("content-type", "text/plain")
-                                    .end(new App().getGreeting());
+                                    .end("Hello From Reindeer!");
                         })
-                .listen(8080);
+                .listen(
+                        8888,
+                        http -> {
+                            if (http.succeeded()) {
+                                startPromise.complete();
+                                System.out.println("HTTP server started on port 8888");
+                            } else {
+                                startPromise.fail(http.cause());
+                            }
+                        });
     }
 }
