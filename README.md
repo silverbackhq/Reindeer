@@ -1,5 +1,6 @@
+<a href="http://www.reactivemanifesto.org/"> <img style="border: 0; position: fixed; right: 0; top:0; z-index: 9000" src="https://d379ifj7s9wntv.cloudfront.net/reactivemanifesto/images/ribbons/we-are-reactive-black-right.png"> </a>
 <p align="center">
-    <img alt="Reindeer Logo" src="https://raw.githubusercontent.com/Clivern/Reindeer/master/images/logo.png" height="90" />
+    <img alt="Reindeer Logo" src="https://raw.githubusercontent.com/Clivern/Reindeer/master/images/logo.png" height="160" />
     <h3 align="center">Reindeer</h3>
     <p align="center">Reactive Systems Boilerplate for Java.</p>
     <p align="center">
