@@ -2,7 +2,7 @@
 <p align="center">
     <img alt="Reindeer Logo" src="https://raw.githubusercontent.com/Clivern/Reindeer/master/images/logo.png" height="160" />
     <h3 align="center">Reindeer</h3>
-    <p align="center">Reactive Systems Boilerplate for Java.</p>
+    <p align="center">Chaos Simulator to Tolerate Random Failures.</p>
     <p align="center">
         <a href="https://travis-ci.org/Clivern/Reindeer"><img src="https://travis-ci.org/Clivern/Reindeer.svg?branch=master"></a>
             <a href="https://github.com/Clivern/Reindeer/releases"><img src="https://img.shields.io/badge/Version-v0.0.1-blue.svg"></a>
