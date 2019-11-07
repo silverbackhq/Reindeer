@@ -13,6 +13,7 @@
  */
 package com.clivern.reindeer;
 
+import com.clivern.reindeer.config.Config;
 import com.clivern.reindeer.controller.Namespace;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -24,6 +25,8 @@ public class App extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
+
+        Config.getConfig().load("~~");
 
         Router router = Router.router(vertx);
 
