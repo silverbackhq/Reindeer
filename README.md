@@ -2,13 +2,16 @@
 <p align="center">
     <img alt="Reindeer Logo" src="https://raw.githubusercontent.com/Clivern/Reindeer/master/images/logo.png" height="160" />
     <h3 align="center">Reindeer</h3>
-    <p align="center">Chaos Simulator to Tolerate Random Failures.</p>
+    <p align="center">A Service to Mock and Inspect HTTP Events.</p>
     <p align="center">
         <a href="https://travis-ci.org/Clivern/Reindeer"><img src="https://travis-ci.org/Clivern/Reindeer.svg?branch=master"></a>
             <a href="https://github.com/Clivern/Reindeer/releases"><img src="https://img.shields.io/badge/Version-v0.0.1-blue.svg"></a>
         <a href="https://github.com/Clivern/Reindeer/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-Apache_2.0-orange.svg"></a>
     </p>
 </p>
+
+
+Reindeer helps you to inspect payloads of any HTTP request (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc) in a human-friendly way. Also you can mock an entire microservice `REST API`, validate requests, simulate latencies, failures and timeouts of downstream APIs.
 
 
 ## Documentation
