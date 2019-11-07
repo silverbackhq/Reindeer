@@ -24,8 +24,7 @@ public class Namespace {
      * @param context request object
      */
     public void getAll(RoutingContext context) {
-        context
-                .response()
+        context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end("{\"action\":\"getAll\"}");
@@ -37,8 +36,7 @@ public class Namespace {
      * @param context request object
      */
     public void createOne(RoutingContext context) {
-        context
-                .response()
+        context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end("{\"action\":\"createOne\"}");
@@ -51,11 +49,12 @@ public class Namespace {
      */
     public void getOne(RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
-        context
-                .response()
+        context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
-                .end(String.format("{\"namespaceId\":\"%s\", \"action\": \"getOne\"}", namespaceId));
+                .end(
+                        String.format(
+                                "{\"namespaceId\":\"%s\", \"action\": \"getOne\"}", namespaceId));
     }
 
     /**
@@ -65,11 +64,13 @@ public class Namespace {
      */
     public void deleteOne(RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
-        context
-                .response()
+        context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
-                .end(String.format("{\"namespaceId\":\"%s\", \"action\": \"deleteOne\"}", namespaceId));
+                .end(
+                        String.format(
+                                "{\"namespaceId\":\"%s\", \"action\": \"deleteOne\"}",
+                                namespaceId));
     }
 
     /**
@@ -79,10 +80,12 @@ public class Namespace {
      */
     public void updateOne(RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
-        context
-                .response()
+        context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
-                .end(String.format("{\"namespaceId\":\"%s\", \"action\": \"updateOne\"}", namespaceId));
+                .end(
+                        String.format(
+                                "{\"namespaceId\":\"%s\", \"action\": \"updateOne\"}",
+                                namespaceId));
     }
 }

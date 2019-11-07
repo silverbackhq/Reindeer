@@ -27,11 +27,9 @@ public class App extends AbstractVerticle {
 
         Router router = Router.router(vertx);
 
-        router.route("/")
-                .handler(this::healthCheck);
+        router.route("/").handler(this::healthCheck);
 
-        router.route("/_health")
-                .handler(this::healthCheck);
+        router.route("/_health").handler(this::healthCheck);
 
         router.get("/api/v1/namespace")
                 .handler(
@@ -83,8 +81,6 @@ public class App extends AbstractVerticle {
      * @param context request object
      */
     public void healthCheck(RoutingContext context) {
-        context.response()
-                .putHeader("content-type", "application/json")
-                .end("{\"status\":\"ok\"}");
+        context.response().putHeader("content-type", "application/json").end("{\"status\":\"ok\"}");
     }
 }
