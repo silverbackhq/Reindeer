@@ -51,7 +51,7 @@ We are an open source, community-driven project so please feel free to join us. 
 
 **Reindeer** is authored and maintained by [@Silverbackhq](http://github.com/silverbackhq).
 
-##
+
 <p align="center">
     <large>▽</large>
 </p>
