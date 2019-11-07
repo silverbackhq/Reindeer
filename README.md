@@ -11,7 +11,7 @@
 </p>
 
 
-Reindeer helps you to inspect payloads of any HTTP request (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc) in a human-friendly way. Also you can mock an entire microservice `REST API`, validate requests, simulate latencies, failures and timeouts of downstream APIs.
+Reindeer helps you to inspect payloads of any HTTP request (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc) in a human-friendly way. Also you can mock an entire microservice REST API, validate requests, simulate latencies, failures and timeouts of downstream APIs.
 
 
 ## Documentation
