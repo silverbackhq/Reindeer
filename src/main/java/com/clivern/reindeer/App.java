@@ -13,21 +13,58 @@
  */
 package com.clivern.reindeer;
 
+import com.clivern.reindeer.controller.Namespace;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 
 /** Main Class */
 public class App extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
+
+        Router router = Router.router(vertx);
+
+        router.route("/")
+                .handler(this::healthCheck);
+
+        router.route("/_health")
+                .handler(this::healthCheck);
+
+        router.get("/api/v1/namespace")
+                .handler(
+                        context -> {
+                            new Namespace().getAll(context);
+                        });
+
+        router.post("/api/v1/namespace")
+                .handler(
+                        context -> {
+                            new Namespace().createOne(context);
+                        });
+
+        router.get("/api/v1/namespace/:namespaceId")
+                .handler(
+                        context -> {
+                            new Namespace().getOne(context);
+                        });
+
+        router.delete("/api/v1/namespace/:namespaceId")
+                .handler(
+                        context -> {
+                            new Namespace().deleteOne(context);
+                        });
+
+        router.put("/api/v1/namespace/:namespaceId")
+                .handler(
+                        context -> {
+                            new Namespace().updateOne(context);
+                        });
+
         vertx.createHttpServer()
-                .requestHandler(
-                        req -> {
-                            req.response()
-                                    .putHeader("content-type", "text/plain")
-                                    .end("Hello From Reindeer!");
-                        })
+                .requestHandler(router::accept)
                 .listen(
                         8888,
                         http -> {
@@ -38,5 +75,16 @@ public class App extends AbstractVerticle {
                                 startPromise.fail(http.cause());
                             }
                         });
+    }
+
+    /**
+     * Health check endpoint action
+     *
+     * @param context request object
+     */
+    public void healthCheck(RoutingContext context) {
+        context.response()
+                .putHeader("content-type", "application/json")
+                .end("{\"status\":\"ok\"}");
     }
 }
