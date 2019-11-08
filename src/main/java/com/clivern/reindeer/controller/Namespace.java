@@ -13,6 +13,7 @@
  */
 package com.clivern.reindeer.controller;
 
+import com.clivern.reindeer.util.JSON;
 import com.clivern.reindeer.verticle.TestVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
@@ -37,7 +38,7 @@ public class Namespace {
         context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
-                .end("{\"action\":\"getAll\"}");
+                .end(new JSON().put("action", "getAll").toString());
     }
 
     /*
@@ -49,7 +50,7 @@ public class Namespace {
         context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
-                .end("{\"action\":\"createOne\"}");
+                .end(new JSON().put("action", "createOne").toString());
     }
 
     /**
@@ -62,9 +63,7 @@ public class Namespace {
         context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
-                .end(
-                        String.format(
-                                "{\"namespaceId\":\"%s\", \"action\": \"getOne\"}", namespaceId));
+                .end(new JSON().put("action", "getOne").put("namespaceId", namespaceId).toString());
     }
 
     /**
@@ -78,9 +77,10 @@ public class Namespace {
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end(
-                        String.format(
-                                "{\"namespaceId\":\"%s\", \"action\": \"deleteOne\"}",
-                                namespaceId));
+                        new JSON()
+                                .put("action", "deleteOne")
+                                .put("namespaceId", namespaceId)
+                                .toString());
     }
 
     /**
@@ -94,8 +94,9 @@ public class Namespace {
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end(
-                        String.format(
-                                "{\"namespaceId\":\"%s\", \"action\": \"updateOne\"}",
-                                namespaceId));
+                        new JSON()
+                                .put("action", "updateOne")
+                                .put("namespaceId", namespaceId)
+                                .toString());
     }
 }

@@ -13,6 +13,7 @@
  */
 package com.clivern.reindeer.controller;
 
+import com.clivern.reindeer.util.JSON;
 import com.clivern.reindeer.verticle.TestVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
@@ -38,7 +39,7 @@ public class Endpoint {
         context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
-                .end(String.format("{\"namespaceId\":\"%s\", \"action\":\"getAll\"}", namespaceId));
+                .end(new JSON().put("action", "getAll").put("namespaceId", namespaceId).toString());
     }
 
     /**
@@ -52,8 +53,10 @@ public class Endpoint {
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end(
-                        String.format(
-                                "{\"namespaceId\":\"%s\", \"action\":\"createOne\"}", namespaceId));
+                        new JSON()
+                                .put("action", "createOne")
+                                .put("namespaceId", namespaceId)
+                                .toString());
     }
 
     /**
@@ -68,9 +71,11 @@ public class Endpoint {
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end(
-                        String.format(
-                                "{\"namespaceId\":\"%s\", \"endpointId\": \"%s\", \"action\": \"getOne\"}",
-                                namespaceId, endpointId));
+                        new JSON()
+                                .put("action", "getOne")
+                                .put("namespaceId", namespaceId)
+                                .put("endpointId", endpointId)
+                                .toString());
     }
 
     /**
@@ -85,9 +90,11 @@ public class Endpoint {
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end(
-                        String.format(
-                                "{\"namespaceId\":\"%s\", \"endpointId\": \"%s\", \"action\": \"deleteOne\"}",
-                                namespaceId, endpointId));
+                        new JSON()
+                                .put("action", "deleteOne")
+                                .put("namespaceId", namespaceId)
+                                .put("endpointId", endpointId)
+                                .toString());
     }
 
     /**
@@ -102,8 +109,10 @@ public class Endpoint {
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end(
-                        String.format(
-                                "{\"namespaceId\":\"%s\", \"endpointId\": \"%s\", \"action\": \"updateOne\"}",
-                                namespaceId, endpointId));
+                        new JSON()
+                                .put("action", "updateOne")
+                                .put("namespaceId", namespaceId)
+                                .put("endpointId", endpointId)
+                                .toString());
     }
 }
