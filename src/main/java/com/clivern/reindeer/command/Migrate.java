@@ -20,11 +20,7 @@ public class Migrate {
 
     /** Run Migration */
     public void run() {
-        Flyway flyway =
-                Flyway.configure()
-                        .dataSource(
-                                "jdbc:h2:file:./db", "sa", null)
-                        .load();
+        Flyway flyway = Flyway.configure().dataSource("jdbc:h2:file:./db", "sa", null).load();
         flyway.migrate();
     }
 }
