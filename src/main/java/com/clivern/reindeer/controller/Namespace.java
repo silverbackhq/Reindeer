@@ -13,10 +13,18 @@
  */
 package com.clivern.reindeer.controller;
 
+import com.clivern.reindeer.verticle.TestVerticle;
+import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
 
 /** Namespace Class */
 public class Namespace {
+
+    private Vertx vertx;
+
+    public Namespace(Vertx vertx) {
+        this.vertx = vertx;
+    }
 
     /**
      * Get namespaces endpoint action
@@ -24,13 +32,15 @@ public class Namespace {
      * @param context request object
      */
     public void getAll(RoutingContext context) {
+        this.vertx.eventBus().send(TestVerticle.ADDRESS, "Namespace::getAll");
+
         context.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "application/json")
                 .end("{\"action\":\"getAll\"}");
     }
 
-    /**
+    /*
      * Create namespace endpoint action
      *
      * @param context request object

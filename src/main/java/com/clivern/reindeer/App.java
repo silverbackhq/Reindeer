@@ -14,7 +14,9 @@
 package com.clivern.reindeer;
 
 import com.clivern.reindeer.config.Config;
+import com.clivern.reindeer.controller.Endpoint;
 import com.clivern.reindeer.controller.Namespace;
+import com.clivern.reindeer.verticle.TestVerticle;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
@@ -25,6 +27,7 @@ public class App extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
+        System.out.println("[INFO] App Verticle Started.");
 
         Config.getConfig().load("~~");
 
@@ -37,31 +40,61 @@ public class App extends AbstractVerticle {
         router.get("/api/v1/namespace")
                 .handler(
                         context -> {
-                            new Namespace().getAll(context);
+                            new Namespace(vertx).getAll(context);
                         });
 
         router.post("/api/v1/namespace")
                 .handler(
                         context -> {
-                            new Namespace().createOne(context);
+                            new Namespace(vertx).createOne(context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace().getOne(context);
+                            new Namespace(vertx).getOne(context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace().deleteOne(context);
+                            new Namespace(vertx).deleteOne(context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace().updateOne(context);
+                            new Namespace(vertx).updateOne(context);
+                        });
+
+        router.get("/api/v1/namespace/:namespaceId/endpoint")
+                .handler(
+                        context -> {
+                            new Endpoint(vertx).getAll(context);
+                        });
+
+        router.post("/api/v1/namespace/:namespaceId/endpoint")
+                .handler(
+                        context -> {
+                            new Endpoint(vertx).createOne(context);
+                        });
+
+        router.get("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
+                .handler(
+                        context -> {
+                            new Endpoint(vertx).getOne(context);
+                        });
+
+        router.delete("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
+                .handler(
+                        context -> {
+                            new Endpoint(vertx).deleteOne(context);
+                        });
+
+        router.put("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
+                .handler(
+                        context -> {
+                            new Endpoint(vertx).updateOne(context);
                         });
 
         vertx.createHttpServer()
@@ -76,6 +109,8 @@ public class App extends AbstractVerticle {
                                 startPromise.fail(http.cause());
                             }
                         });
+
+        vertx.deployVerticle(new TestVerticle());
     }
 
     /**
@@ -85,5 +120,10 @@ public class App extends AbstractVerticle {
      */
     public void healthCheck(RoutingContext context) {
         context.response().putHeader("content-type", "application/json").end("{\"status\":\"ok\"}");
+    }
+
+    @Override
+    public void stop() throws Exception {
+        System.out.println("[INFO] App Verticle Stopped.");
     }
 }
