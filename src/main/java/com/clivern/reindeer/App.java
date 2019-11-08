@@ -16,6 +16,7 @@ package com.clivern.reindeer;
 import com.clivern.reindeer.config.Config;
 import com.clivern.reindeer.controller.Endpoint;
 import com.clivern.reindeer.controller.Namespace;
+import com.clivern.reindeer.util.JSON;
 import com.clivern.reindeer.verticle.TestVerticle;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -119,7 +120,9 @@ public class App extends AbstractVerticle {
      * @param context request object
      */
     public void healthCheck(RoutingContext context) {
-        context.response().putHeader("content-type", "application/json").end("{\"status\":\"ok\"}");
+        context.response()
+                .putHeader("content-type", "application/json")
+                .end(new JSON().put("status", "ok").toString());
     }
 
     @Override
