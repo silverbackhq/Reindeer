@@ -13,5 +13,97 @@
  */
 package com.clivern.reindeer.controller;
 
+import com.clivern.reindeer.verticle.TestVerticle;
+import io.vertx.core.Vertx;
+import io.vertx.ext.web.RoutingContext;
+
 /** Endpoint Class */
-public class Endpoint {}
+public class Endpoint {
+
+    private Vertx vertx;
+
+    public Endpoint(Vertx vertx) {
+        this.vertx = vertx;
+    }
+
+    /**
+     * Get namespace endpoints endpoint action
+     *
+     * @param context request object
+     */
+    public void getAll(RoutingContext context) {
+        this.vertx.eventBus().send(TestVerticle.ADDRESS, "Endpoint::getAll");
+
+        String namespaceId = context.request().getParam("namespaceId");
+        context.response()
+                .setStatusCode(200)
+                .putHeader("content-type", "application/json")
+                .end(String.format("{\"namespaceId\":\"%s\", \"action\":\"getAll\"}", namespaceId));
+    }
+
+    /**
+     * Create namespace endpoint endpoint action
+     *
+     * @param context request object
+     */
+    public void createOne(RoutingContext context) {
+        String namespaceId = context.request().getParam("namespaceId");
+        context.response()
+                .setStatusCode(200)
+                .putHeader("content-type", "application/json")
+                .end(
+                        String.format(
+                                "{\"namespaceId\":\"%s\", \"action\":\"createOne\"}", namespaceId));
+    }
+
+    /**
+     * Get namespace endpoint endpoint action
+     *
+     * @param context request object
+     */
+    public void getOne(RoutingContext context) {
+        String namespaceId = context.request().getParam("namespaceId");
+        String endpointId = context.request().getParam("endpointId");
+        context.response()
+                .setStatusCode(200)
+                .putHeader("content-type", "application/json")
+                .end(
+                        String.format(
+                                "{\"namespaceId\":\"%s\", \"endpointId\": \"%s\", \"action\": \"getOne\"}",
+                                namespaceId, endpointId));
+    }
+
+    /**
+     * Delete namespace endpoint endpoint action
+     *
+     * @param context request object
+     */
+    public void deleteOne(RoutingContext context) {
+        String namespaceId = context.request().getParam("namespaceId");
+        String endpointId = context.request().getParam("endpointId");
+        context.response()
+                .setStatusCode(200)
+                .putHeader("content-type", "application/json")
+                .end(
+                        String.format(
+                                "{\"namespaceId\":\"%s\", \"endpointId\": \"%s\", \"action\": \"deleteOne\"}",
+                                namespaceId, endpointId));
+    }
+
+    /**
+     * Update namespace endpoint endpoint action
+     *
+     * @param context request object
+     */
+    public void updateOne(RoutingContext context) {
+        String namespaceId = context.request().getParam("namespaceId");
+        String endpointId = context.request().getParam("endpointId");
+        context.response()
+                .setStatusCode(200)
+                .putHeader("content-type", "application/json")
+                .end(
+                        String.format(
+                                "{\"namespaceId\":\"%s\", \"endpointId\": \"%s\", \"action\": \"updateOne\"}",
+                                namespaceId, endpointId));
+    }
+}
