@@ -13,7 +13,9 @@
  */
 package com.clivern.reindeer.controller;
 
+import com.clivern.reindeer.util.ContentType;
 import com.clivern.reindeer.util.JSON;
+import com.clivern.reindeer.util.StatusCode;
 import com.clivern.reindeer.verticle.TestVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
@@ -37,8 +39,8 @@ public class Endpoint {
 
         String namespaceId = context.request().getParam("namespaceId");
         context.response()
-                .setStatusCode(200)
-                .putHeader("content-type", "application/json")
+                .setStatusCode(StatusCode.OK)
+                .putHeader("content-type", ContentType.JSON)
                 .end(new JSON().put("action", "getAll").put("namespaceId", namespaceId).toString());
     }
 
@@ -50,8 +52,8 @@ public class Endpoint {
     public void createOne(RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
         context.response()
-                .setStatusCode(200)
-                .putHeader("content-type", "application/json")
+                .setStatusCode(StatusCode.OK)
+                .putHeader("content-type", ContentType.JSON)
                 .end(
                         new JSON()
                                 .put("action", "createOne")
@@ -68,8 +70,8 @@ public class Endpoint {
         String namespaceId = context.request().getParam("namespaceId");
         String endpointId = context.request().getParam("endpointId");
         context.response()
-                .setStatusCode(200)
-                .putHeader("content-type", "application/json")
+                .setStatusCode(StatusCode.OK)
+                .putHeader("content-type", ContentType.JSON)
                 .end(
                         new JSON()
                                 .put("action", "getOne")
@@ -87,8 +89,8 @@ public class Endpoint {
         String namespaceId = context.request().getParam("namespaceId");
         String endpointId = context.request().getParam("endpointId");
         context.response()
-                .setStatusCode(200)
-                .putHeader("content-type", "application/json")
+                .setStatusCode(StatusCode.OK)
+                .putHeader("content-type", ContentType.JSON)
                 .end(
                         new JSON()
                                 .put("action", "deleteOne")
@@ -106,8 +108,8 @@ public class Endpoint {
         String namespaceId = context.request().getParam("namespaceId");
         String endpointId = context.request().getParam("endpointId");
         context.response()
-                .setStatusCode(200)
-                .putHeader("content-type", "application/json")
+                .setStatusCode(StatusCode.OK)
+                .putHeader("content-type", ContentType.JSON)
                 .end(
                         new JSON()
                                 .put("action", "updateOne")
