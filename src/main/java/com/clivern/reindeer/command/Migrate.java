@@ -23,7 +23,7 @@ public class Migrate {
         Flyway flyway =
                 Flyway.configure()
                         .dataSource(
-                                "jdbc:h2:file:/Users/Ahmed/Projects/Stuff/Reindeer/db", "sa", null)
+                                "jdbc:h2:file:./db", "sa", null)
                         .load();
         flyway.migrate();
     }
