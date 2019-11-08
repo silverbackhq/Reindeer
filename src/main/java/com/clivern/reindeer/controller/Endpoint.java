@@ -35,7 +35,7 @@ public class Endpoint {
      * @param context request object
      */
     public void getAll(RoutingContext context) {
-        this.vertx.eventBus().send(TestVerticle.ADDRESS, "Endpoint::getAll");
+        this.vertx.eventBus().send(TestVerticle.class.getName(), "Endpoint::getAll");
 
         String namespaceId = context.request().getParam("namespaceId");
         context.response()

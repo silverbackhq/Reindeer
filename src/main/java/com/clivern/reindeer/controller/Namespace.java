@@ -35,7 +35,7 @@ public class Namespace {
      * @param context request object
      */
     public void getAll(RoutingContext context) {
-        this.vertx.eventBus().send(TestVerticle.ADDRESS, "Namespace::getAll");
+        this.vertx.eventBus().send(TestVerticle.class.getName(), "Namespace::getAll");
 
         context.response()
                 .setStatusCode(StatusCode.OK)

@@ -15,9 +15,8 @@ package com.clivern.reindeer.verticle;
 
 import io.vertx.core.AbstractVerticle;
 
+/** TestVerticle Class */
 public class TestVerticle extends AbstractVerticle {
-
-    public static final String ADDRESS = "testVerticle";
 
     @Override
     public void start() throws Exception {
@@ -25,9 +24,10 @@ public class TestVerticle extends AbstractVerticle {
 
         vertx.eventBus()
                 .consumer(
-                        TestVerticle.ADDRESS,
+                        TestVerticle.class.getName(),
                         message -> {
-                            System.out.println("Received message: " + message.body());
+                            System.out.println(
+                                    String.format("[INFO] Received message: %s", message.body()));
                         });
     }
 
