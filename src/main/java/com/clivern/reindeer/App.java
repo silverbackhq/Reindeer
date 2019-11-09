@@ -21,7 +21,7 @@ import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
 import java.util.List;
 
-/** Main Class */
+/** Main App Class */
 public class App extends AbstractVerticle {
 
     @Override
