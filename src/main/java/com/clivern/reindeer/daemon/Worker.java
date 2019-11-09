@@ -11,11 +11,12 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer.verticle;
+package com.clivern.reindeer.daemon;
 
 import com.clivern.reindeer.task.*;
 import com.clivern.reindeer.util.Serializer;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.eventbus.Message;
 
 /** Worker Class */
 public class Worker extends AbstractVerticle {
@@ -30,13 +31,7 @@ public class Worker extends AbstractVerticle {
     @Override
     public void start() throws Exception {
         System.out.println("[INFO] Test Verticle Started.");
-
-        vertx.eventBus()
-                .consumer(
-                        Worker.class.getName(),
-                        message -> {
-                            this.invokeTask(message.body().toString());
-                        });
+        vertx.eventBus().consumer(Worker.class.getName(), this::invoke);
     }
 
     @Override
@@ -45,20 +40,20 @@ public class Worker extends AbstractVerticle {
     }
 
     /**
-     * Invoke Task
+     * Invoke Tasks
      *
-     * @param message incoming message
+     * @param signal incoming signal
      */
-    private void invokeTask(String message) {
-        Message messageObj = this.serializer.unserialize(message, Message.class);
+    private void invoke(Message<String> signal) {
+        Signal signalObj = this.serializer.unserialize(signal.body().toString(), Signal.class);
 
-        if (messageObj.task == null) {
+        if (signalObj.task == null) {
             return;
         }
 
         // Invoke com.clivern.reindeer.task.Log Task
-        if (messageObj.task.equals(Log.class.getName())) {
-            new Log().run(messageObj.args);
+        if (signalObj.task.equals(Log.class.getName())) {
+            new Log().run(signalObj.args);
         }
     }
 }

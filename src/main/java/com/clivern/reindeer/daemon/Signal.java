@@ -11,13 +11,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer.verticle;
+package com.clivern.reindeer.daemon;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 
-/** Message Class */
-public class Message {
+/** Signal Class */
+public class Signal {
 
     @SerializedName("task")
     public String task;

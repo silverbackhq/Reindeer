@@ -13,11 +13,11 @@
  */
 package com.clivern.reindeer.controller;
 
+import com.clivern.reindeer.daemon.Worker;
 import com.clivern.reindeer.task.Log;
 import com.clivern.reindeer.util.ContentType;
 import com.clivern.reindeer.util.JSON;
 import com.clivern.reindeer.util.StatusCode;
-import com.clivern.reindeer.verticle.Worker;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
 

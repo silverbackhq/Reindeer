@@ -15,7 +15,7 @@ package com.clivern.reindeer;
 
 import com.clivern.reindeer.config.Config;
 import com.clivern.reindeer.controller.*;
-import com.clivern.reindeer.verticle.Worker;
+import com.clivern.reindeer.daemon.Worker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
