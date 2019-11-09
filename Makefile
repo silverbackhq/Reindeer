@@ -3,7 +3,7 @@ GRADLEW           ?= ./gradlew
 
 help: Makefile
 	@echo
-	@echo " Choose a command to run in Kangaroo:"
+	@echo " Choose a command to run in Reindeer:"
 	@echo
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
 	@echo
