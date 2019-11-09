@@ -26,6 +26,7 @@ public class App extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
+
         System.out.println("[INFO] App Verticle Started.");
 
         this.loadEnvironment(this.processArgs());
@@ -140,6 +141,13 @@ public class App extends AbstractVerticle {
             System.out.println("[INFO] Running App on Test Mode");
             return;
         }
+
+        if (!Config.loadFromConfig()) {
+            System.out.println("[INFO] App is reading the configs from environment variables.");
+            return;
+        }
+
+        System.out.println("[INFO] App is reading the configs from config file.");
 
         Boolean envLoaded = false;
 

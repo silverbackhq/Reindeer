@@ -33,6 +33,17 @@ public class Config {
     }
 
     /**
+     * Check whether to load from env file or env variables
+     *
+     * @return Whether to load from env file or env variables
+     */
+    public static Boolean loadFromConfig() {
+        String loadFrom = System.getenv("REINDEER_LOAD_FROM");
+
+        return (loadFrom != null && loadFrom.equals("system")) ? false : true;
+    }
+
+    /**
      * Load .env file inside a directory
      *
      * @param directory .env file directory
@@ -65,7 +76,7 @@ public class Config {
      * @return the value
      */
     public String getString(String variable, String def) {
-        String value = this.env.get(variable);
+        String value = this.get(variable);
 
         if (value == null) {
             return def;
@@ -86,7 +97,7 @@ public class Config {
      * @return the value
      */
     public Integer getInt(String variable, Integer def) {
-        String value = this.env.get(variable);
+        String value = this.get(variable);
 
         if (value == null) {
             return def;
@@ -97,5 +108,19 @@ public class Config {
         }
 
         return Integer.parseInt(value.trim());
+    }
+
+    /**
+     * Get Variable whether from config or environment variables
+     *
+     * @param variable the key
+     * @return the value
+     */
+    private String get(String variable) {
+        if (Config.loadFromConfig()) {
+            return this.env.get(variable);
+        } else {
+            return System.getenv(String.format("REINDEER_%s", variable));
+        }
     }
 }
