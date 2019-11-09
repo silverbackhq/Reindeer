@@ -19,7 +19,7 @@ Reindeer helps you to inspect payloads of any HTTP request (`GET`, `POST`, `PUT`
 
 ### Development:
 
-Reindeer uses gradle as a build tool. First create a config file
+Reindeer built on a top of [vert.x](https://vertx.io/) and uses gradle as a build tool. In order to get started, you need to clone the repository and create a config file.
 
 ```bash
 $ git clone https://github.com/silverbackhq/Reindeer.git
@@ -60,6 +60,16 @@ $ make ARGS="-Dexec=migrate" run
 
 # Provide the path to .env file & Run the app
 $ make ARGS="-Denv=/path/to/.env" run
+```
+
+Whenever you do changes, please make sure to run the following commands locally:
+
+```
+# to make sure unit and quality testing passed.
+make ci
+
+# to format the new code changes.
+make format
 ```
 
 

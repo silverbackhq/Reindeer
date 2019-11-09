@@ -9,6 +9,12 @@ help: Makefile
 	@echo
 
 
+## gradlew: Run Gradle Command
+gradlew:
+	@echo ">> ============= Run Gradle Command ============= <<"
+	$(GRADLEW) ${ARGS}
+
+
 ## assemble: Gradle assemble code task
 assemble:
 	@echo ">> ============= Gradle assemble code task ============= <<"
