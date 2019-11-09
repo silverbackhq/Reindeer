@@ -13,10 +13,11 @@
  */
 package com.clivern.reindeer.controller;
 
+import com.clivern.reindeer.task.Log;
 import com.clivern.reindeer.util.ContentType;
 import com.clivern.reindeer.util.JSON;
 import com.clivern.reindeer.util.StatusCode;
-import com.clivern.reindeer.verticle.TestVerticle;
+import com.clivern.reindeer.verticle.Worker;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
 
@@ -35,7 +36,11 @@ public class Namespace {
      * @param context request object
      */
     public void getAll(RoutingContext context) {
-        this.vertx.eventBus().send(TestVerticle.class.getName(), "Namespace::getAll");
+        this.vertx
+                .eventBus()
+                .send(
+                        Worker.class.getName(),
+                        new JSON().put("task", Log.class.getName()).toString());
 
         context.response()
                 .setStatusCode(StatusCode.OK)

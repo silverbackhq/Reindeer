@@ -15,7 +15,7 @@ package com.clivern.reindeer;
 
 import com.clivern.reindeer.config.Config;
 import com.clivern.reindeer.controller.*;
-import com.clivern.reindeer.verticle.TestVerticle;
+import com.clivern.reindeer.verticle.Worker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
@@ -120,7 +120,7 @@ public class App extends AbstractVerticle {
                             }
                         });
 
-        vertx.deployVerticle(new TestVerticle());
+        vertx.deployVerticle(new Worker());
     }
 
     @Override

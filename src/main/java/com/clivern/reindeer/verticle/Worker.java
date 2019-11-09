@@ -13,10 +13,19 @@
  */
 package com.clivern.reindeer.verticle;
 
+import com.clivern.reindeer.task.*;
+import com.clivern.reindeer.util.Serializer;
 import io.vertx.core.AbstractVerticle;
 
-/** TestVerticle Class */
-public class TestVerticle extends AbstractVerticle {
+/** Worker Class */
+public class Worker extends AbstractVerticle {
+
+    private Serializer serializer;
+
+    /** Class Constructor */
+    public Worker() {
+        this.serializer = new Serializer();
+    }
 
     @Override
     public void start() throws Exception {
@@ -24,15 +33,32 @@ public class TestVerticle extends AbstractVerticle {
 
         vertx.eventBus()
                 .consumer(
-                        TestVerticle.class.getName(),
+                        Worker.class.getName(),
                         message -> {
-                            System.out.println(
-                                    String.format("[INFO] Received message: %s", message.body()));
+                            this.invokeTask(message.body().toString());
                         });
     }
 
     @Override
     public void stop() throws Exception {
         System.out.println("[INFO] Test Verticle Stopped.");
+    }
+
+    /**
+     * Invoke Task
+     *
+     * @param message incoming message
+     */
+    private void invokeTask(String message) {
+        Message messageObj = this.serializer.unserialize(message, Message.class);
+
+        if (messageObj.task == null) {
+            return;
+        }
+
+        // Invoke com.clivern.reindeer.task.Log Task
+        if (messageObj.task.equals(Log.class.getName())) {
+            new Log().run(messageObj.args);
+        }
     }
 }

@@ -80,6 +80,27 @@ public class JSON {
         return this;
     }
 
+    /**
+     * Add Item
+     *
+     * @param key Item Key
+     * @param value Item Value
+     * @return JSON Instance
+     */
+    public JSON put(String key, JSONObject value) {
+        this.obj.put(key, value);
+        return this;
+    }
+
+    /**
+     * Get JSONObject
+     *
+     * @return the JSONObject
+     */
+    public JSONObject get() {
+        return this.obj;
+    }
+
     @Override
     public String toString() {
         return this.obj.toString();
