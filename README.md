@@ -16,11 +16,54 @@ Reindeer helps you to inspect payloads of any HTTP request (`GET`, `POST`, `PUT`
 
 ## Documentation
 
-### Getting Started
+
+### Development:
+
+Reindeer uses gradle as a build tool. First create a config file
 
 ```bash
-#
+$ git clone https://github.com/silverbackhq/Reindeer.git
+$ cp .env.example .env
 ```
+
+Then define your custom configs
+
+```env
+APP_NAME=Reindeer
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+APP_PORT=8888
+
+DB_CONNECTION=h2
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=/path/to/db
+DB_USERNAME=root
+DB_PASSWORD=secret
+
+APP_TIMEZONE=UTC
+APP_LANGUAGE=en-us
+
+APP_LOGGING_HANDLERS=stdout
+APP_LOGGING_LEVEL=debug
+APP_LOGGING_FORMAT=plain
+
+REINDEER_LOAD_FROM=config
+```
+
+And then migrate & run the application.
+
+```bash
+# Migrate the DB
+$ make ARGS="-Dexec=migrate" run
+
+# Provide the path to .env file & Run the app
+$ make ARGS="-Denv=/path/to/.env" run
+```
+
+
+### Deployment:
 
 
 ## Versioning

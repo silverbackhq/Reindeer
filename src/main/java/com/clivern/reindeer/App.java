@@ -14,16 +14,12 @@
 package com.clivern.reindeer;
 
 import com.clivern.reindeer.config.Config;
-import com.clivern.reindeer.controller.Endpoint;
-import com.clivern.reindeer.controller.Namespace;
-import com.clivern.reindeer.util.ContentType;
-import com.clivern.reindeer.util.JSON;
-import com.clivern.reindeer.util.StatusCode;
+import com.clivern.reindeer.controller.*;
 import com.clivern.reindeer.verticle.TestVerticle;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
+import java.util.List;
 
 /** Main Class */
 public class App extends AbstractVerticle {
@@ -31,14 +27,22 @@ public class App extends AbstractVerticle {
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
         System.out.println("[INFO] App Verticle Started.");
-        System.out.println(this.processArgs());
-        Config.getConfig().load("~~");
+
+        this.loadEnvironment(this.processArgs());
 
         Router router = Router.router(vertx);
 
-        router.route("/").handler(this::healthCheck);
+        router.get("/")
+                .handler(
+                        context -> {
+                            new Health(vertx).check(context);
+                        });
 
-        router.route("/_health").handler(this::healthCheck);
+        router.get("/_health")
+                .handler(
+                        context -> {
+                            new Health(vertx).check(context);
+                        });
 
         router.get("/api/v1/namespace")
                 .handler(
@@ -103,11 +107,14 @@ public class App extends AbstractVerticle {
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(
-                        8888,
+                        Config.getConfig().getInt("APP_PORT", 8888),
                         http -> {
                             if (http.succeeded()) {
                                 startPromise.complete();
-                                System.out.println("HTTP server started on port 8888");
+                                System.out.println(
+                                        String.format(
+                                                "HTTP server started on port %d",
+                                                Config.getConfig().getInt("APP_PORT", 8888)));
                             } else {
                                 startPromise.fail(http.cause());
                             }
@@ -116,20 +123,42 @@ public class App extends AbstractVerticle {
         vertx.deployVerticle(new TestVerticle());
     }
 
-    /**
-     * Health check endpoint action
-     *
-     * @param context request object
-     */
-    public void healthCheck(RoutingContext context) {
-        context.response()
-                .setStatusCode(StatusCode.OK)
-                .putHeader("content-type", ContentType.JSON)
-                .end(new JSON().put("status", "ok").toString());
-    }
-
     @Override
     public void stop() throws Exception {
         System.out.println("[INFO] App Verticle Stopped.");
+    }
+
+    /**
+     * Load Environment Configs
+     *
+     * @param args the process args
+     * @throws Exception when unable to load the configs
+     */
+    public void loadEnvironment(List<String> args) throws Exception {
+        if (args == null) {
+            System.out.println("[INFO] Running App on Test Mode");
+            return;
+        }
+
+        if (!Config.loadFromConfig()) {
+            System.out.println("[INFO] App is reading the configs from environment variables.");
+            return;
+        }
+
+        System.out.println("[INFO] App is reading the configs from config file.");
+
+        Boolean envLoaded = false;
+
+        for (String arg : args) {
+            if (arg.startsWith("--env=")) {
+                String path = arg.replace("--env=", "");
+                Config.getConfig().load(path);
+                envLoaded = true;
+                break;
+            }
+        }
+        if (!envLoaded) {
+            throw new Exception("ERROR! Environment file path not provided.");
+        }
     }
 }
