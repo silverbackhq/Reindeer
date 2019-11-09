@@ -14,6 +14,7 @@
 package com.clivern.reindeer.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import java.io.File;
 
 /** Config Class */
 public class Config {
@@ -35,13 +36,24 @@ public class Config {
      * Load .env file inside a directory
      *
      * @param directory .env file directory
+     * @throws Exception when unable to load the configs
      */
-    public void load(String directory) {
+    public void load(String directory) throws Exception {
+
+        if (directory.equals("")) {
+            throw new Exception("ERROR! Environment file path is invalid.");
+        }
+
+        File f = new File(directory.replace("/.env", ""));
+
+        if (!f.isDirectory()) {
+            throw new Exception("ERROR! Environment file path is invalid.");
+        }
+
         this.env =
                 Dotenv.configure()
-                        .directory(directory)
-                        .ignoreIfMalformed()
-                        .ignoreIfMissing()
+                        .directory(directory.replace("/.env", ""))
+                        .filename(".env")
                         .load();
     }
 
@@ -49,9 +61,41 @@ public class Config {
      * Get env record
      *
      * @param variable the key
+     * @param def the default value
      * @return the value
      */
-    public String get(String variable) {
-        return this.env.get(variable);
+    public String getString(String variable, String def) {
+        String value = this.env.get(variable);
+
+        if (value == null) {
+            return def;
+        }
+
+        if (value.trim().equals("")) {
+            return "";
+        }
+
+        return value.trim();
+    }
+
+    /**
+     * Get env record
+     *
+     * @param variable the key
+     * @param def the default value
+     * @return the value
+     */
+    public Integer getInt(String variable, Integer def) {
+        String value = this.env.get(variable);
+
+        if (value == null) {
+            return def;
+        }
+
+        if (value.trim().equals("")) {
+            return new Integer(0);
+        }
+
+        return Integer.parseInt(value.trim());
     }
 }
