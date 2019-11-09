@@ -134,7 +134,7 @@ public class App extends AbstractVerticle {
      * @param args the process args
      * @throws Exception when unable to load the configs
      */
-    public void loadEnvironment(List<String> args) throws Exception {
+    private void loadEnvironment(List<String> args) throws Exception {
         if (args == null) {
             System.out.println("[INFO] Running App on Test Mode");
             return;
