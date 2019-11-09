@@ -83,5 +83,15 @@ test {
 }
 
 run {
-    args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+    args = [
+        'run',
+        mainVerticleName,
+        "--redeploy=$watchForChange",
+        "--launcher-class=$mainClassName",
+        "--on-redeploy=$doOnChange",
+        // ./gradlew run -Dexec=migrate -Denv=/path/to/.env
+        // make ARGS="-Dexec=migrate -Denv=/path/to/.env" run
+        (System.getProperty("exec") == null) ? "--exec=" : "--exec=" + System.getProperty("exec"),
+        (System.getProperty("env") == null) ? "--env=" : "--env=" + System.getProperty("env")
+    ]
 }

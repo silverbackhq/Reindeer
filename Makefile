@@ -93,7 +93,7 @@ coverage:
 ## run: Run the App
 run:
 	@echo ">> ============= Run the Application ============= <<"
-	$(GRADLEW) run
+	$(GRADLEW) run ${ARGS}
 
 
 ## ci: Run all CI tests.

@@ -31,7 +31,7 @@ public class App extends AbstractVerticle {
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
         System.out.println("[INFO] App Verticle Started.");
-
+        System.out.println(this.processArgs());
         Config.getConfig().load("~~");
 
         Router router = Router.router(vertx);
