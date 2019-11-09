@@ -64,12 +64,15 @@ $ make ARGS="-Denv=/path/to/.env" run
 
 Whenever you do changes, please make sure to run the following commands locally:
 
-```
+```bash
 # to make sure unit and quality testing passed.
-make ci
+$ make ci
 
 # to format the new code changes.
-make format
+$ make format
+
+# To list all commands
+$ make
 ```
 
 
