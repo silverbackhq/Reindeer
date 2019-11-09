@@ -28,7 +28,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class AppTest {
 
     public AppTest() throws Exception {
-        Config.getConfig().load("src/test/resources/");
+        Config.getConfig().load("src/test/resources/.env.test");
     }
 
     @BeforeEach

@@ -44,27 +44,31 @@ public class Config {
     }
 
     /**
-     * Load .env file inside a directory
+     * Load .env file
      *
-     * @param directory .env file directory
+     * @param path .env file path
      * @throws Exception when unable to load the configs
      */
-    public void load(String directory) throws Exception {
-
-        if (directory.equals("")) {
+    public void load(String path) throws Exception {
+        if (path.equals("")) {
             throw new Exception("ERROR! Environment file path is invalid.");
         }
 
-        File f = new File(directory.replace("/.env", ""));
+        File f = new File(path);
 
-        if (!f.isDirectory()) {
+        if (!f.exists() || !f.isFile()) {
             throw new Exception("ERROR! Environment file path is invalid.");
         }
+
+        System.out.println(
+                String.format(
+                        "[INFO] Load config file %s/%s",
+                        (f.getParent() == null) ? "./" : f.getParent(), f.getName()));
 
         this.env =
                 Dotenv.configure()
-                        .directory(directory.replace("/.env", ""))
-                        .filename(".env")
+                        .directory((f.getParent() == null) ? "./" : f.getParent())
+                        .filename(f.getName())
                         .load();
     }
 

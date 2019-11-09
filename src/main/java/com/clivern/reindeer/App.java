@@ -26,7 +26,6 @@ public class App extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
-
         System.out.println("[INFO] App Verticle Started.");
 
         this.loadEnvironment(this.processArgs());
@@ -136,7 +135,6 @@ public class App extends AbstractVerticle {
      * @throws Exception when unable to load the configs
      */
     public void loadEnvironment(List<String> args) throws Exception {
-
         if (args == null) {
             System.out.println("[INFO] Running App on Test Mode");
             return;
