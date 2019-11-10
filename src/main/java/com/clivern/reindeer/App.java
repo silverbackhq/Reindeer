@@ -133,8 +133,6 @@ public class App extends AbstractVerticle {
      */
     private Future<Void> startHttpServer() {
 
-        this.injector = Guice.createInjector(new Container());
-
         Promise<Void> promise = Promise.promise();
 
         System.out.println("[INFO] App Verticle Started.");
