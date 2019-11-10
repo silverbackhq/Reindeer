@@ -24,6 +24,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
 import java.util.List;
+import com.clivern.reindeer.middleware.Before;
 
 /** Main App Class */
 public class App extends AbstractVerticle {
@@ -138,6 +139,10 @@ public class App extends AbstractVerticle {
         System.out.println("[INFO] App Verticle Started.");
 
         Router router = Router.router(vertx);
+
+        router.route().handler(context -> {
+            this.injector.getInstance(Before.class).run(context);
+        });
 
         router.get("/")
                 .handler(
