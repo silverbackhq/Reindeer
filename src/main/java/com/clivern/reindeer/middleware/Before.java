@@ -14,9 +14,6 @@
 package com.clivern.reindeer.middleware;
 
 import io.vertx.ext.web.RoutingContext;
-import com.clivern.reindeer.util.StatusCode;
-import com.clivern.reindeer.util.ContentType;
-import com.clivern.reindeer.util.JSON;
 
 /** Before Class */
 public class Before {
@@ -26,7 +23,7 @@ public class Before {
      *
      * @param context request object
      */
-    public void run(RoutingContext context){
+    public void run(RoutingContext context) {
         System.out.println("[INFO] Middleware!");
         context.next();
     }
