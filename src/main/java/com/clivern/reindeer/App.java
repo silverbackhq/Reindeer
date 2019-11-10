@@ -35,7 +35,9 @@ public class App extends AbstractVerticle {
 
         this.injector = Guice.createInjector(new Container());
 
-        Future<Void> steps = prepareDatabase().compose(v -> startHttpServer());
+        Future<Void> steps =
+                bootstrapEnv().compose(v -> prepareDatabase()).compose(v -> startHttpServer());
+
         steps.setHandler(
                 result -> {
                     if (result.succeeded()) {
@@ -52,6 +54,63 @@ public class App extends AbstractVerticle {
     }
 
     /**
+     * Bootstrap Environment
+     *
+     * @return an instance of future object
+     */
+    private Future<Void> bootstrapEnv() {
+
+        Promise<Void> promise = Promise.promise();
+
+        System.out.println("[INFO] Start loading application configs.");
+
+        List<String> args = this.processArgs();
+
+        if (args == null) {
+            System.out.println("[INFO] Running App on Test Mode");
+
+            promise.complete();
+
+            return promise.future();
+        }
+
+        if (!Config.loadFromConfig()) {
+            System.out.println("[INFO] App is reading the configs from environment variables.");
+
+            promise.complete();
+
+            return promise.future();
+        }
+
+        System.out.println("[INFO] App is reading the configs from config file.");
+
+        Boolean envLoaded = false;
+
+        try {
+            for (String arg : args) {
+                if (arg.startsWith("--env=")) {
+                    String path = arg.replace("--env=", "");
+                    Config.getConfig().load(path);
+                    envLoaded = true;
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            promise.fail(e.getMessage());
+            return promise.future();
+        }
+
+        if (!envLoaded) {
+            promise.fail("ERROR! Environment file path not provided.");
+            return promise.future();
+        }
+
+        promise.complete();
+
+        return promise.future();
+    }
+
+    /**
      * Prepare The Database
      *
      * @return an instance of future object
@@ -59,6 +118,7 @@ public class App extends AbstractVerticle {
     private Future<Void> prepareDatabase() {
 
         Promise<Void> promise = Promise.promise();
+
         System.out.println("[INFO] Prepare the database for application.");
 
         promise.complete();
@@ -72,18 +132,12 @@ public class App extends AbstractVerticle {
      * @return an instance of future object
      */
     private Future<Void> startHttpServer() {
+
         this.injector = Guice.createInjector(new Container());
 
         Promise<Void> promise = Promise.promise();
 
         System.out.println("[INFO] App Verticle Started.");
-
-        try {
-            this.loadEnvironment(this.processArgs());
-        } catch (Exception e) {
-            promise.fail(e.toString());
-            return promise.future();
-        }
 
         Router router = Router.router(vertx);
 
@@ -178,39 +232,5 @@ public class App extends AbstractVerticle {
         vertx.deployVerticle(this.injector.getInstance(Worker.class));
 
         return promise.future();
-    }
-
-    /**
-     * Load Environment Configs
-     *
-     * @param args the process args
-     * @throws Exception when unable to load the configs
-     */
-    private void loadEnvironment(List<String> args) throws Exception {
-        if (args == null) {
-            System.out.println("[INFO] Running App on Test Mode");
-            return;
-        }
-
-        if (!Config.loadFromConfig()) {
-            System.out.println("[INFO] App is reading the configs from environment variables.");
-            return;
-        }
-
-        System.out.println("[INFO] App is reading the configs from config file.");
-
-        Boolean envLoaded = false;
-
-        for (String arg : args) {
-            if (arg.startsWith("--env=")) {
-                String path = arg.replace("--env=", "");
-                Config.getConfig().load(path);
-                envLoaded = true;
-                break;
-            }
-        }
-        if (!envLoaded) {
-            throw new Exception("ERROR! Environment file path not provided.");
-        }
     }
 }
