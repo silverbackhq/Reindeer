@@ -20,6 +20,7 @@ import com.clivern.reindeer.daemon.Worker;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
 import java.util.List;
@@ -27,86 +28,135 @@ import java.util.List;
 /** Main App Class */
 public class App extends AbstractVerticle {
 
+    private Injector injector;
+
     @Override
-    public void start(Promise<Void> startPromise) throws Exception {
+    public void start(Promise<Void> promise) {
+
+        this.injector = Guice.createInjector(new Container());
+
+        Future<Void> steps = prepareDatabase().compose(v -> startHttpServer());
+        steps.setHandler(
+                result -> {
+                    if (result.succeeded()) {
+                        promise.complete();
+                    } else {
+                        promise.fail(result.cause());
+                    }
+                });
+    }
+
+    @Override
+    public void stop() throws Exception {
+        System.out.println("[INFO] App Verticle Stopped.");
+    }
+
+    /**
+     * Prepare The Database
+     *
+     * @return an instance of future object
+     */
+    private Future<Void> prepareDatabase() {
+
+        Promise<Void> promise = Promise.promise();
+        System.out.println("[INFO] Prepare the database for application.");
+
+        promise.complete();
+
+        return promise.future();
+    }
+
+    /**
+     * Start The HTTP Server
+     *
+     * @return an instance of future object
+     */
+    private Future<Void> startHttpServer() {
+        this.injector = Guice.createInjector(new Container());
+
+        Promise<Void> promise = Promise.promise();
+
         System.out.println("[INFO] App Verticle Started.");
 
-        Injector injector = Guice.createInjector(new Container());
-
-        this.loadEnvironment(this.processArgs());
+        try {
+            this.loadEnvironment(this.processArgs());
+        } catch (Exception e) {
+            promise.fail(e.toString());
+            return promise.future();
+        }
 
         Router router = Router.router(vertx);
 
         router.get("/")
                 .handler(
                         context -> {
-                            injector.getInstance(Health.class).check(vertx, context);
+                            this.injector.getInstance(Health.class).check(vertx, context);
                         });
 
         router.get("/_health")
                 .handler(
                         context -> {
-                            injector.getInstance(Health.class).check(vertx, context);
+                            this.injector.getInstance(Health.class).check(vertx, context);
                         });
 
         router.get("/api/v1/namespace")
                 .handler(
                         context -> {
-                            injector.getInstance(Namespace.class).getAll(vertx, context);
+                            this.injector.getInstance(Namespace.class).getAll(vertx, context);
                         });
 
         router.post("/api/v1/namespace")
                 .handler(
                         context -> {
-                            injector.getInstance(Namespace.class).createOne(vertx, context);
+                            this.injector.getInstance(Namespace.class).createOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            injector.getInstance(Namespace.class).getOne(vertx, context);
+                            this.injector.getInstance(Namespace.class).getOne(vertx, context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            injector.getInstance(Namespace.class).deleteOne(vertx, context);
+                            this.injector.getInstance(Namespace.class).deleteOne(vertx, context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            injector.getInstance(Namespace.class).updateOne(vertx, context);
+                            this.injector.getInstance(Namespace.class).updateOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId/endpoint")
                 .handler(
                         context -> {
-                            injector.getInstance(Endpoint.class).getAll(vertx, context);
+                            this.injector.getInstance(Endpoint.class).getAll(vertx, context);
                         });
 
         router.post("/api/v1/namespace/:namespaceId/endpoint")
                 .handler(
                         context -> {
-                            injector.getInstance(Endpoint.class).createOne(vertx, context);
+                            this.injector.getInstance(Endpoint.class).createOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            injector.getInstance(Endpoint.class).getOne(vertx, context);
+                            this.injector.getInstance(Endpoint.class).getOne(vertx, context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            injector.getInstance(Endpoint.class).deleteOne(vertx, context);
+                            this.injector.getInstance(Endpoint.class).deleteOne(vertx, context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            injector.getInstance(Endpoint.class).updateOne(vertx, context);
+                            this.injector.getInstance(Endpoint.class).updateOne(vertx, context);
                         });
 
         vertx.createHttpServer()
@@ -115,22 +165,19 @@ public class App extends AbstractVerticle {
                         Config.getConfig().getInt("APP_PORT", 8888),
                         http -> {
                             if (http.succeeded()) {
-                                startPromise.complete();
+                                promise.complete();
                                 System.out.println(
                                         String.format(
                                                 "HTTP server started on port %d",
                                                 Config.getConfig().getInt("APP_PORT", 8888)));
                             } else {
-                                startPromise.fail(http.cause());
+                                promise.fail(http.cause());
                             }
                         });
 
-        vertx.deployVerticle(injector.getInstance(Worker.class));
-    }
+        vertx.deployVerticle(this.injector.getInstance(Worker.class));
 
-    @Override
-    public void stop() throws Exception {
-        System.out.println("[INFO] App Verticle Stopped.");
+        return promise.future();
     }
 
     /**
