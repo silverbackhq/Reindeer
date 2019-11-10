@@ -31,9 +31,9 @@ public class App extends AbstractVerticle {
     public void start(Promise<Void> startPromise) throws Exception {
         System.out.println("[INFO] App Verticle Started.");
 
-        this.loadEnvironment(this.processArgs());
-
         Injector injector = Guice.createInjector(new Container());
+
+        this.loadEnvironment(this.processArgs());
 
         Router router = Router.router(vertx);
 

@@ -55,9 +55,6 @@ REINDEER_LOAD_FROM=config
 And then migrate & run the application.
 
 ```bash
-# Migrate the DB
-$ make ARGS="-Dexec=migrate" run
-
 # Provide the path to .env file & Run the app
 $ make ARGS="-Denv=/path/to/.env" run
 ```
