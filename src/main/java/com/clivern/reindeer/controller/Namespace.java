@@ -24,20 +24,14 @@ import io.vertx.ext.web.RoutingContext;
 /** Namespace Class */
 public class Namespace {
 
-    private Vertx vertx;
-
-    public Namespace(Vertx vertx) {
-        this.vertx = vertx;
-    }
-
     /**
      * Get namespaces endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void getAll(RoutingContext context) {
-        this.vertx
-                .eventBus()
+    public void getAll(Vertx vertx, RoutingContext context) {
+        vertx.eventBus()
                 .send(
                         Worker.class.getName(),
                         new JSON().put("task", Log.class.getName()).toString());
@@ -52,8 +46,9 @@ public class Namespace {
      * Create namespace endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void createOne(RoutingContext context) {
+    public void createOne(Vertx vertx, RoutingContext context) {
         context.response()
                 .setStatusCode(StatusCode.OK)
                 .putHeader("content-type", ContentType.JSON)
@@ -64,8 +59,9 @@ public class Namespace {
      * Get namespace endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void getOne(RoutingContext context) {
+    public void getOne(Vertx vertx, RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
         context.response()
                 .setStatusCode(StatusCode.OK)
@@ -77,8 +73,9 @@ public class Namespace {
      * Delete namespace endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void deleteOne(RoutingContext context) {
+    public void deleteOne(Vertx vertx, RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
         context.response()
                 .setStatusCode(StatusCode.OK)
@@ -94,8 +91,9 @@ public class Namespace {
      * Update namespace endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void updateOne(RoutingContext context) {
+    public void updateOne(Vertx vertx, RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
         context.response()
                 .setStatusCode(StatusCode.OK)

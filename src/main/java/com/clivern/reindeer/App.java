@@ -35,73 +35,73 @@ public class App extends AbstractVerticle {
         router.get("/")
                 .handler(
                         context -> {
-                            new Health(vertx).check(context);
+                            new Health().check(vertx, context);
                         });
 
         router.get("/_health")
                 .handler(
                         context -> {
-                            new Health(vertx).check(context);
+                            new Health().check(vertx, context);
                         });
 
         router.get("/api/v1/namespace")
                 .handler(
                         context -> {
-                            new Namespace(vertx).getAll(context);
+                            new Namespace().getAll(vertx, context);
                         });
 
         router.post("/api/v1/namespace")
                 .handler(
                         context -> {
-                            new Namespace(vertx).createOne(context);
+                            new Namespace().createOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace(vertx).getOne(context);
+                            new Namespace().getOne(vertx, context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace(vertx).deleteOne(context);
+                            new Namespace().deleteOne(vertx, context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace(vertx).updateOne(context);
+                            new Namespace().updateOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId/endpoint")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).getAll(context);
+                            new Endpoint().getAll(vertx, context);
                         });
 
         router.post("/api/v1/namespace/:namespaceId/endpoint")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).createOne(context);
+                            new Endpoint().createOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).getOne(context);
+                            new Endpoint().getOne(vertx, context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).deleteOne(context);
+                            new Endpoint().deleteOne(vertx, context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).updateOne(context);
+                            new Endpoint().updateOne(vertx, context);
                         });
 
         vertx.createHttpServer()

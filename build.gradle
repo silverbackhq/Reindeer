@@ -58,6 +58,8 @@ dependencies {
     implementation 'com.h2database:h2:1.4.197'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.guava:guava:27.1-jre'
+    implementation 'com.clivern:kangaroo:0.0.1'
 
     testImplementation "io.vertx:vertx-unit:$vertxVersion"
     testImplementation "io.vertx:vertx-junit5:$vertxVersion"
