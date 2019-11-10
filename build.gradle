@@ -44,7 +44,7 @@ ext {
     h2Version = '1.4.197'
     googleJsonSimpleVersion = '1.1.1'
     googleGsonVersion = '2.8.5'
-    googleGuavaVersion = '27.1-jre'
+    googleInjectGuiceVersion = '4.1.0'
     clivernKangarooVersion = '0.0.1'
 }
 
@@ -65,7 +65,7 @@ dependencies {
     implementation "com.h2database:h2:$h2Version"
     implementation "com.googlecode.json-simple:json-simple:$googleJsonSimpleVersion"
     implementation "com.google.code.gson:gson:$googleGsonVersion"
-    implementation "com.google.guava:guava:$googleGuavaVersion"
+    implementation "com.google.inject:guice:$googleInjectGuiceVersion"
     implementation "com.clivern:kangaroo:$clivernKangarooVersion"
 
     testImplementation "io.vertx:vertx-unit:$vertxVersion"

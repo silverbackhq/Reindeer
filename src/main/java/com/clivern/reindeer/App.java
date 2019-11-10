@@ -14,8 +14,11 @@
 package com.clivern.reindeer;
 
 import com.clivern.reindeer.config.Config;
+import com.clivern.reindeer.config.Container;
 import com.clivern.reindeer.controller.*;
 import com.clivern.reindeer.daemon.Worker;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
@@ -29,6 +32,8 @@ public class App extends AbstractVerticle {
         System.out.println("[INFO] App Verticle Started.");
 
         this.loadEnvironment(this.processArgs());
+
+        Injector injector = Guice.createInjector(new Container());
 
         Router router = Router.router(vertx);
 
@@ -120,7 +125,7 @@ public class App extends AbstractVerticle {
                             }
                         });
 
-        vertx.deployVerticle(new Worker());
+        vertx.deployVerticle(injector.getInstance(Worker.class));
     }
 
     @Override

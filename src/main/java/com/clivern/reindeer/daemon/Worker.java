@@ -15,6 +15,7 @@ package com.clivern.reindeer.daemon;
 
 import com.clivern.reindeer.task.*;
 import com.clivern.reindeer.util.Serializer;
+import com.google.inject.Inject;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.Message;
 
@@ -23,9 +24,14 @@ public class Worker extends AbstractVerticle {
 
     private Serializer serializer;
 
-    /** Class Constructor */
-    public Worker() {
-        this.serializer = new Serializer();
+    /**
+     * Class Constructor
+     *
+     * @param serializer an instance of serializer
+     */
+    @Inject
+    public Worker(Serializer serializer) {
+        this.serializer = serializer;
     }
 
     @Override
