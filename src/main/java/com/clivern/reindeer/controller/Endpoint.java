@@ -24,20 +24,14 @@ import io.vertx.ext.web.RoutingContext;
 /** Endpoint Class */
 public class Endpoint {
 
-    private Vertx vertx;
-
-    public Endpoint(Vertx vertx) {
-        this.vertx = vertx;
-    }
-
     /**
      * Get namespace endpoints endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void getAll(RoutingContext context) {
-        this.vertx
-                .eventBus()
+    public void getAll(Vertx vertx, RoutingContext context) {
+        vertx.eventBus()
                 .send(
                         Worker.class.getName(),
                         new JSON().put("task", Log.class.getName()).toString());
@@ -53,8 +47,9 @@ public class Endpoint {
      * Create namespace endpoint endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void createOne(RoutingContext context) {
+    public void createOne(Vertx vertx, RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
         context.response()
                 .setStatusCode(StatusCode.OK)
@@ -70,8 +65,9 @@ public class Endpoint {
      * Get namespace endpoint endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void getOne(RoutingContext context) {
+    public void getOne(Vertx vertx, RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
         String endpointId = context.request().getParam("endpointId");
         context.response()
@@ -89,8 +85,9 @@ public class Endpoint {
      * Delete namespace endpoint endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void deleteOne(RoutingContext context) {
+    public void deleteOne(Vertx vertx, RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
         String endpointId = context.request().getParam("endpointId");
         context.response()
@@ -108,8 +105,9 @@ public class Endpoint {
      * Update namespace endpoint endpoint action
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void updateOne(RoutingContext context) {
+    public void updateOne(Vertx vertx, RoutingContext context) {
         String namespaceId = context.request().getParam("namespaceId");
         String endpointId = context.request().getParam("endpointId");
         context.response()

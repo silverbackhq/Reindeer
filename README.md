@@ -45,9 +45,9 @@ DB_PASSWORD=secret
 APP_TIMEZONE=UTC
 APP_LANGUAGE=en-us
 
-APP_LOGGING_HANDLERS=stdout
+APP_LOGGING_HANDLERS=console
 APP_LOGGING_LEVEL=debug
-APP_LOGGING_FORMAT=plain
+APP_LOGGING_FORMAT={date} [{level}] {class}.{method}() {message}
 
 REINDEER_LOAD_FROM=config
 ```
@@ -55,9 +55,6 @@ REINDEER_LOAD_FROM=config
 And then migrate & run the application.
 
 ```bash
-# Migrate the DB
-$ make ARGS="-Dexec=migrate" run
-
 # Provide the path to .env file & Run the app
 $ make ARGS="-Denv=/path/to/.env" run
 ```

@@ -14,15 +14,21 @@
 package com.clivern.reindeer.util;
 
 import com.google.gson.Gson;
+import com.google.inject.Inject;
 
 /** Serializer Class */
 public class Serializer {
 
     private Gson gson;
 
-    /** Class Constructor */
-    public Serializer() {
-        this.gson = new Gson();
+    /**
+     * Class Constructor
+     *
+     * @param gson an instance of Gson
+     */
+    @Inject
+    public Serializer(Gson gson) {
+        this.gson = gson;
     }
 
     /**

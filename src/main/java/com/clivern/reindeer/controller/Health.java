@@ -24,20 +24,14 @@ import io.vertx.ext.web.RoutingContext;
 /** Health Class */
 public class Health {
 
-    private Vertx vertx;
-
-    public Health(Vertx vertx) {
-        this.vertx = vertx;
-    }
-
     /**
      * Health Check
      *
      * @param context request object
+     * @param vertx an instance of Vertx
      */
-    public void check(RoutingContext context) {
-        this.vertx
-                .eventBus()
+    public void check(Vertx vertx, RoutingContext context) {
+        vertx.eventBus()
                 .send(
                         Worker.class.getName(),
                         new JSON()

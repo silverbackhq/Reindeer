@@ -11,16 +11,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer.command;
+package com.clivern.reindeer.config;
 
-import org.flywaydb.core.Flyway;
+import com.google.inject.AbstractModule;
 
-/** Migrate Class */
-public class Migrate {
+/** DI Bindings Class */
+public class Container extends AbstractModule {
 
-    /** Run Migration */
-    public void run() {
-        Flyway flyway = Flyway.configure().dataSource("jdbc:h2:file:./db", "sa", null).load();
-        flyway.migrate();
-    }
+    @Override
+    protected void configure() {}
 }

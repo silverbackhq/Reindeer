@@ -14,95 +14,208 @@
 package com.clivern.reindeer;
 
 import com.clivern.reindeer.config.Config;
+import com.clivern.reindeer.config.Container;
+import com.clivern.reindeer.config.Logging;
 import com.clivern.reindeer.controller.*;
 import com.clivern.reindeer.daemon.Worker;
+import com.clivern.reindeer.middleware.Before;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
 import java.util.List;
+import org.tinylog.Logger;
 
 /** Main App Class */
 public class App extends AbstractVerticle {
 
-    @Override
-    public void start(Promise<Void> startPromise) throws Exception {
-        System.out.println("[INFO] App Verticle Started.");
+    private Injector injector;
 
-        this.loadEnvironment(this.processArgs());
+    @Override
+    public void start(Promise<Void> promise) {
+
+        this.injector = Guice.createInjector(new Container());
+
+        Future<Void> steps =
+                bootstrapEnv().compose(v -> prepareDatabase()).compose(v -> startHttpServer());
+
+        steps.setHandler(
+                result -> {
+                    if (result.succeeded()) {
+                        promise.complete();
+                    } else {
+                        promise.fail(result.cause());
+                    }
+                });
+    }
+
+    @Override
+    public void stop() throws Exception {
+        Logger.info("Application main verticle stopped.");
+    }
+
+    /**
+     * Bootstrap Environment
+     *
+     * @return an instance of future object
+     */
+    private Future<Void> bootstrapEnv() {
+
+        Promise<Void> promise = Promise.promise();
+
+        List<String> args = this.processArgs();
+
+        if (args == null) {
+            promise.complete();
+            return promise.future();
+        }
+
+        if (!Config.loadFromConfig()) {
+            promise.complete();
+            return promise.future();
+        }
+
+        Boolean envLoaded = false;
+
+        try {
+            for (String arg : args) {
+                if (arg.startsWith("--env=")) {
+                    String path = arg.replace("--env=", "");
+                    Config.getConfig().load(path);
+                    envLoaded = true;
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            promise.fail(e.getMessage());
+            return promise.future();
+        }
+
+        if (!envLoaded) {
+            promise.fail("ERROR! Environment file path not provided.");
+            return promise.future();
+        }
+
+        // Config Logging
+        Logging.config();
+
+        promise.complete();
+
+        return promise.future();
+    }
+
+    /**
+     * Prepare The Database
+     *
+     * @return an instance of future object
+     */
+    private Future<Void> prepareDatabase() {
+
+        Promise<Void> promise = Promise.promise();
+
+        Logger.info("Prepare the database for application.");
+
+        promise.complete();
+
+        return promise.future();
+    }
+
+    /**
+     * Start The HTTP Server
+     *
+     * @return an instance of future object
+     */
+    private Future<Void> startHttpServer() {
+
+        Promise<Void> promise = Promise.promise();
+
+        Logger.info("Application main verticle started.");
 
         Router router = Router.router(vertx);
+
+        Logger.debug("Build application routes.");
+
+        router.route()
+                .handler(
+                        context -> {
+                            this.injector.getInstance(Before.class).run(context);
+                        });
 
         router.get("/")
                 .handler(
                         context -> {
-                            new Health(vertx).check(context);
+                            this.injector.getInstance(Health.class).check(vertx, context);
                         });
 
         router.get("/_health")
                 .handler(
                         context -> {
-                            new Health(vertx).check(context);
+                            this.injector.getInstance(Health.class).check(vertx, context);
                         });
 
         router.get("/api/v1/namespace")
                 .handler(
                         context -> {
-                            new Namespace(vertx).getAll(context);
+                            this.injector.getInstance(Namespace.class).getAll(vertx, context);
                         });
 
         router.post("/api/v1/namespace")
                 .handler(
                         context -> {
-                            new Namespace(vertx).createOne(context);
+                            this.injector.getInstance(Namespace.class).createOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace(vertx).getOne(context);
+                            this.injector.getInstance(Namespace.class).getOne(vertx, context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace(vertx).deleteOne(context);
+                            this.injector.getInstance(Namespace.class).deleteOne(vertx, context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            new Namespace(vertx).updateOne(context);
+                            this.injector.getInstance(Namespace.class).updateOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId/endpoint")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).getAll(context);
+                            this.injector.getInstance(Endpoint.class).getAll(vertx, context);
                         });
 
         router.post("/api/v1/namespace/:namespaceId/endpoint")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).createOne(context);
+                            this.injector.getInstance(Endpoint.class).createOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).getOne(context);
+                            this.injector.getInstance(Endpoint.class).getOne(vertx, context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).deleteOne(context);
+                            this.injector.getInstance(Endpoint.class).deleteOne(vertx, context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            new Endpoint(vertx).updateOne(context);
+                            this.injector.getInstance(Endpoint.class).updateOne(vertx, context);
                         });
+
+        Logger.debug("Starting HTTP server.");
 
         vertx.createHttpServer()
                 .requestHandler(router::accept)
@@ -110,55 +223,19 @@ public class App extends AbstractVerticle {
                         Config.getConfig().getInt("APP_PORT", 8888),
                         http -> {
                             if (http.succeeded()) {
-                                startPromise.complete();
-                                System.out.println(
-                                        String.format(
-                                                "HTTP server started on port %d",
-                                                Config.getConfig().getInt("APP_PORT", 8888)));
+                                promise.complete();
+                                Logger.info(
+                                        "HTTP server started on port {0}",
+                                        Config.getConfig().getInt("APP_PORT", 8888));
                             } else {
-                                startPromise.fail(http.cause());
+                                Logger.error(http.cause());
+                                promise.fail(http.cause());
                             }
                         });
 
-        vertx.deployVerticle(new Worker());
-    }
+        Logger.info("Deploying worker verticle {0}.", Worker.class.getName());
+        vertx.deployVerticle(this.injector.getInstance(Worker.class));
 
-    @Override
-    public void stop() throws Exception {
-        System.out.println("[INFO] App Verticle Stopped.");
-    }
-
-    /**
-     * Load Environment Configs
-     *
-     * @param args the process args
-     * @throws Exception when unable to load the configs
-     */
-    private void loadEnvironment(List<String> args) throws Exception {
-        if (args == null) {
-            System.out.println("[INFO] Running App on Test Mode");
-            return;
-        }
-
-        if (!Config.loadFromConfig()) {
-            System.out.println("[INFO] App is reading the configs from environment variables.");
-            return;
-        }
-
-        System.out.println("[INFO] App is reading the configs from config file.");
-
-        Boolean envLoaded = false;
-
-        for (String arg : args) {
-            if (arg.startsWith("--env=")) {
-                String path = arg.replace("--env=", "");
-                Config.getConfig().load(path);
-                envLoaded = true;
-                break;
-            }
-        }
-        if (!envLoaded) {
-            throw new Exception("ERROR! Environment file path not provided.");
-        }
+        return promise.future();
     }
 }
