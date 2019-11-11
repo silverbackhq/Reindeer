@@ -37,13 +37,13 @@ public class Worker extends AbstractVerticle {
 
     @Override
     public void start() throws Exception {
-        Logger.info("Worker verticle {0} started.", Worker.class.getName());
+        Logger.info("Worker verticle {} started.", Worker.class.getName());
         vertx.eventBus().consumer(Worker.class.getName(), this::invoke);
     }
 
     @Override
     public void stop() throws Exception {
-        Logger.info("Worker verticle {0} stopped.", Worker.class.getName());
+        Logger.info("Worker verticle {} stopped.", Worker.class.getName());
     }
 
     /**

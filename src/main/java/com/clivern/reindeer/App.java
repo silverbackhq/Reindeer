@@ -225,7 +225,7 @@ public class App extends AbstractVerticle {
                             if (http.succeeded()) {
                                 promise.complete();
                                 Logger.info(
-                                        "HTTP server started on port {0}",
+                                        "HTTP server started on port {}",
                                         Config.getConfig().getInt("APP_PORT", 8888));
                             } else {
                                 Logger.error(http.cause());
@@ -233,7 +233,7 @@ public class App extends AbstractVerticle {
                             }
                         });
 
-        Logger.info("Deploying worker verticle {0}.", Worker.class.getName());
+        Logger.info("Deploying worker verticle {}.", Worker.class.getName().toString());
         vertx.deployVerticle(this.injector.getInstance(Worker.class));
 
         return promise.future();

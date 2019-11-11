@@ -25,6 +25,6 @@ public class Log {
      * @param message the incoming task args
      */
     public void run(HashMap<String, String> message) {
-        Logger.info("Incoming message {0} to task {1}.", message, Log.class.getName());
+        Logger.info("Trigger async task {} with args {}.", Log.class.getName(), message.toString());
     }
 }
