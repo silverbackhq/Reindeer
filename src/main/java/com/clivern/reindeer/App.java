@@ -15,6 +15,7 @@ package com.clivern.reindeer;
 
 import com.clivern.reindeer.config.Config;
 import com.clivern.reindeer.config.Container;
+import com.clivern.reindeer.config.Logging;
 import com.clivern.reindeer.controller.*;
 import com.clivern.reindeer.daemon.Worker;
 import com.clivern.reindeer.middleware.Before;
@@ -25,6 +26,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
 import java.util.List;
+import org.tinylog.Logger;
 
 /** Main App Class */
 public class App extends AbstractVerticle {
@@ -51,7 +53,7 @@ public class App extends AbstractVerticle {
 
     @Override
     public void stop() throws Exception {
-        System.out.println("[INFO] App Verticle Stopped.");
+        Logger.info("Application main verticle stopped.");
     }
 
     /**
@@ -63,27 +65,17 @@ public class App extends AbstractVerticle {
 
         Promise<Void> promise = Promise.promise();
 
-        System.out.println("[INFO] Start loading application configs.");
-
         List<String> args = this.processArgs();
 
         if (args == null) {
-            System.out.println("[INFO] Running App on Test Mode");
-
             promise.complete();
-
             return promise.future();
         }
 
         if (!Config.loadFromConfig()) {
-            System.out.println("[INFO] App is reading the configs from environment variables.");
-
             promise.complete();
-
             return promise.future();
         }
-
-        System.out.println("[INFO] App is reading the configs from config file.");
 
         Boolean envLoaded = false;
 
@@ -106,6 +98,9 @@ public class App extends AbstractVerticle {
             return promise.future();
         }
 
+        // Config Logging
+        Logging.config();
+
         promise.complete();
 
         return promise.future();
@@ -120,7 +115,7 @@ public class App extends AbstractVerticle {
 
         Promise<Void> promise = Promise.promise();
 
-        System.out.println("[INFO] Prepare the database for application.");
+        Logger.info("Prepare the database for application.");
 
         promise.complete();
 
@@ -136,9 +131,11 @@ public class App extends AbstractVerticle {
 
         Promise<Void> promise = Promise.promise();
 
-        System.out.println("[INFO] App Verticle Started.");
+        Logger.info("Application main verticle started.");
 
         Router router = Router.router(vertx);
+
+        Logger.debug("Build application routes.");
 
         router.route()
                 .handler(
@@ -218,6 +215,8 @@ public class App extends AbstractVerticle {
                             this.injector.getInstance(Endpoint.class).updateOne(vertx, context);
                         });
 
+        Logger.debug("Starting HTTP server.");
+
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(
@@ -225,15 +224,16 @@ public class App extends AbstractVerticle {
                         http -> {
                             if (http.succeeded()) {
                                 promise.complete();
-                                System.out.println(
-                                        String.format(
-                                                "HTTP server started on port %d",
-                                                Config.getConfig().getInt("APP_PORT", 8888)));
+                                Logger.info(
+                                        "HTTP server started on port {0}",
+                                        Config.getConfig().getInt("APP_PORT", 8888));
                             } else {
+                                Logger.error(http.cause());
                                 promise.fail(http.cause());
                             }
                         });
 
+        Logger.info("Deploying worker verticle {0}.", Worker.class.getName());
         vertx.deployVerticle(this.injector.getInstance(Worker.class));
 
         return promise.future();

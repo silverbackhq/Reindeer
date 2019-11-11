@@ -46,6 +46,7 @@ ext {
     googleGsonVersion = '2.8.5'
     googleInjectGuiceVersion = '4.1.0'
     clivernKangarooVersion = '0.0.1'
+    tinylogVersion = '2.0.0'
 }
 
 application {
@@ -67,6 +68,8 @@ dependencies {
     implementation "com.google.code.gson:gson:$googleGsonVersion"
     implementation "com.google.inject:guice:$googleInjectGuiceVersion"
     implementation "com.clivern:kangaroo:$clivernKangarooVersion"
+    implementation "org.tinylog:tinylog-api:$tinylogVersion"
+    implementation "org.tinylog:tinylog-impl:$tinylogVersion"
 
     testImplementation "io.vertx:vertx-unit:$vertxVersion"
     testImplementation "io.vertx:vertx-junit5:$vertxVersion"
