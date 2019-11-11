@@ -14,10 +14,11 @@
 package com.clivern.reindeer.middleware;
 
 import io.vertx.ext.web.RoutingContext;
+import java.util.UUID;
 import org.tinylog.Logger;
 
-/** Before Class */
-public class Before {
+/** Correlation Class */
+public class Correlation {
 
     /**
      * Run Middleware
@@ -26,7 +27,7 @@ public class Before {
      */
     public void run(RoutingContext context) {
         Logger.info("Trigger {} Middleware", Before.class.getName());
-        Logger.info("Incoming Request [corrlationId={}]", (String) context.get("X-Correlation-ID"));
+        context.put("X-Correlation-ID", UUID.randomUUID().toString());
         context.next();
     }
 }
