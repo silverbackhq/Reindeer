@@ -26,7 +26,7 @@ public class Correlation {
      * @param context request object
      */
     public void run(RoutingContext context) {
-        Logger.info("Trigger {} Middleware", Before.class.getName());
+        Logger.info("Trigger {} Middleware", Correlation.class.getName());
         context.put("X-Correlation-ID", UUID.randomUUID().toString());
         context.next();
     }
