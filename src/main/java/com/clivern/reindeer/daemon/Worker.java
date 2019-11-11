@@ -18,6 +18,7 @@ import com.clivern.reindeer.util.Serializer;
 import com.google.inject.Inject;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.Message;
+import org.tinylog.Logger;
 
 /** Worker Class */
 public class Worker extends AbstractVerticle {
@@ -36,13 +37,13 @@ public class Worker extends AbstractVerticle {
 
     @Override
     public void start() throws Exception {
-        System.out.println("[INFO] Test Verticle Started.");
+        Logger.info("Worker verticle {0} started.", Worker.class.getName());
         vertx.eventBus().consumer(Worker.class.getName(), this::invoke);
     }
 
     @Override
     public void stop() throws Exception {
-        System.out.println("[INFO] Test Verticle Stopped.");
+        Logger.info("Worker verticle {0} stopped.", Worker.class.getName());
     }
 
     /**

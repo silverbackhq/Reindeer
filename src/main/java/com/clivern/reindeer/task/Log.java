@@ -14,6 +14,7 @@
 package com.clivern.reindeer.task;
 
 import java.util.HashMap;
+import org.tinylog.Logger;
 
 /** Log Class */
 public class Log {
@@ -24,6 +25,6 @@ public class Log {
      * @param message the incoming task args
      */
     public void run(HashMap<String, String> message) {
-        System.out.println(message);
+        Logger.info("Incoming message {0} to task {1}.", message, Log.class.getName());
     }
 }

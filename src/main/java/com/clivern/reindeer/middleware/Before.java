@@ -14,6 +14,7 @@
 package com.clivern.reindeer.middleware;
 
 import io.vertx.ext.web.RoutingContext;
+import org.tinylog.Logger;
 
 /** Before Class */
 public class Before {
@@ -24,7 +25,7 @@ public class Before {
      * @param context request object
      */
     public void run(RoutingContext context) {
-        System.out.println("[INFO] Middleware!");
+        Logger.info("Before Middleware!");
         context.next();
     }
 }
