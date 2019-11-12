@@ -13,6 +13,10 @@
  */
 package com.clivern.reindeer.middleware;
 
+import com.clivern.reindeer.config.Config;
+import com.clivern.reindeer.util.ContentType;
+import com.clivern.reindeer.util.JSON;
+import com.clivern.reindeer.util.StatusCode;
 import io.vertx.ext.web.RoutingContext;
 import org.tinylog.Logger;
 
@@ -25,7 +29,25 @@ public class Auth {
      * @param context request object
      */
     public void run(RoutingContext context) {
-        Logger.info("Trigger {} Middleware", Auth.class.getName());
+        if (!Config.getConfig().getString("APP_AUTH_TOKEN", "").equals("")) {
+            if (context.request().getHeader("X-Auth-Token") == null
+                    || !context.request()
+                            .getHeader("X-Auth-Token")
+                            .equals(Config.getConfig().getString("APP_AUTH_TOKEN", ""))) {
+                context.response()
+                        .setStatusCode(StatusCode.FORBIDDEN)
+                        .putHeader("content-type", ContentType.JSON)
+                        .end(
+                                new JSON()
+                                        .put("error", "Access denied")
+                                        .put(
+                                                "corrlationId",
+                                                (String) context.get("X-Correlation-ID"))
+                                        .toString());
+                return;
+            }
+        }
+
         Logger.info("Incoming Request corrlationId={}", (String) context.get("X-Correlation-ID"));
         context.next();
     }

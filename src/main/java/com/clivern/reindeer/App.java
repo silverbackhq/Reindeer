@@ -266,7 +266,6 @@ public class App extends AbstractVerticle {
                         .setWorkerPoolSize(Worker.POOL_SIZE),
                 res -> {
                     if (res.succeeded()) {
-                        promise.complete();
                         Logger.info(
                                 "{} verticle deployed, deploymentId {}",
                                 Worker.class.getName().toString(),
