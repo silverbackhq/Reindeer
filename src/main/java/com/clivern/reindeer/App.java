@@ -20,6 +20,7 @@ import com.clivern.reindeer.controller.*;
 import com.clivern.reindeer.daemon.Worker;
 import com.clivern.reindeer.middleware.Before;
 import com.clivern.reindeer.middleware.Correlation;
+import com.clivern.reindeer.migration.Migrate;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.vertx.core.AbstractVerticle;
@@ -117,6 +118,20 @@ public class App extends AbstractVerticle {
         Promise<Void> promise = Promise.promise();
 
         Logger.info("Prepare the database for application.");
+
+        try {
+            Logger.info("Start migrating the database.");
+
+            new Migrate().run();
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+
+            promise.fail(e.getMessage());
+
+            return promise.future();
+        }
+
+        Logger.info("Finished migrating the database.");
 
         promise.complete();
 

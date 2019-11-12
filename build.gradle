@@ -47,6 +47,7 @@ ext {
     googleInjectGuiceVersion = '4.1.0'
     clivernKangarooVersion = '0.0.1'
     tinylogVersion = '2.0.0'
+    mysqlConnectorVersion = '8.0.18'
 }
 
 application {
@@ -70,6 +71,7 @@ dependencies {
     implementation "com.clivern:kangaroo:$clivernKangarooVersion"
     implementation "org.tinylog:tinylog-api:$tinylogVersion"
     implementation "org.tinylog:tinylog-impl:$tinylogVersion"
+    implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
 
     testImplementation "io.vertx:vertx-unit:$vertxVersion"
     testImplementation "io.vertx:vertx-junit5:$vertxVersion"

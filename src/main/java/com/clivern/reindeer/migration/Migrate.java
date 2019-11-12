@@ -13,16 +13,53 @@
  */
 package com.clivern.reindeer.migration;
 
+import com.clivern.reindeer.config.Config;
 import org.flywaydb.core.Flyway;
 
 /** Migrate Class */
 public class Migrate {
 
-    /** Run Migration */
-    public void run() {
-        // Create the Flyway instance and point it to the database
-        Flyway flyway = Flyway.configure().dataSource("jdbc:h2:file:./db", "sa", null).load();
-        // Start the migration
+    private static final String DB_H2 = "h2";
+    private static final String DB_MySQL = "mysql";
+
+    /**
+     * Run Migration
+     *
+     * @throws Exception when unsupported database found
+     */
+    public void run() throws Exception {
+        Flyway flyway =
+                Flyway.configure()
+                        .dataSource(
+                                this.getConnectionString(),
+                                Config.getConfig().getString("DB_USERNAME", "root"),
+                                Config.getConfig().getString("DB_PASSWORD", "secret"))
+                        .load();
         flyway.migrate();
+    }
+
+    /**
+     * Get DB Connection String
+     *
+     * @return the DB Connection String
+     * @throws Exception when unsupported database found
+     */
+    private String getConnectionString() throws Exception {
+        if (Config.getConfig().getString("DB_CONNECTION", "h2").equals(Migrate.DB_H2)) {
+            return String.format(
+                    "jdbc:h2:file:%s", Config.getConfig().getString("DB_DATABASE", "./db"));
+        }
+        if (Config.getConfig().getString("DB_CONNECTION", "h2").equals(Migrate.DB_MySQL)) {
+            return String.format(
+                    "jdbc:mysql://%s:%d/%s",
+                    Config.getConfig().getString("DB_HOST", "127.0.0.1"),
+                    Config.getConfig().getInt("DB_PORT", 3306),
+                    Config.getConfig().getString("DB_DATABASE", "reindeer"));
+        }
+
+        throw new Exception(
+                String.format(
+                        "Unsupported database %s",
+                        Config.getConfig().getString("DB_CONNECTION", "h2")));
     }
 }
