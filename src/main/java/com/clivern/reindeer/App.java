@@ -266,16 +266,17 @@ public class App extends AbstractVerticle {
                         .setWorkerPoolSize(Worker.POOL_SIZE),
                 res -> {
                     if (res.succeeded()) {
+                        promise.complete();
                         Logger.info(
                                 "{} verticle deployed, deploymentId {}",
                                 Worker.class.getName().toString(),
                                 res.result());
                     } else {
+                        promise.fail(res.cause());
                         Logger.error(
                                 "{} verticle failed to deploy: {}",
                                 Worker.class.getName().toString(),
                                 res.cause());
-                        promise.fail(res.cause());
                     }
                 });
 
