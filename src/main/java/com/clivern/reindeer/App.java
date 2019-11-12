@@ -18,7 +18,7 @@ import com.clivern.reindeer.config.Container;
 import com.clivern.reindeer.config.Logging;
 import com.clivern.reindeer.controller.*;
 import com.clivern.reindeer.daemon.Worker;
-import com.clivern.reindeer.middleware.Before;
+import com.clivern.reindeer.middleware.Auth;
 import com.clivern.reindeer.middleware.Correlation;
 import com.clivern.reindeer.migration.Migrate;
 import com.google.inject.Guice;
@@ -162,7 +162,7 @@ public class App extends AbstractVerticle {
         router.route()
                 .handler(
                         context -> {
-                            this.injector.getInstance(Before.class).run(context);
+                            this.injector.getInstance(Auth.class).run(context);
                         });
 
         router.get("/")

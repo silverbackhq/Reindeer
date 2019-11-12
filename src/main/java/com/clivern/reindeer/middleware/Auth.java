@@ -16,8 +16,8 @@ package com.clivern.reindeer.middleware;
 import io.vertx.ext.web.RoutingContext;
 import org.tinylog.Logger;
 
-/** Before Class */
-public class Before {
+/** Auth Class */
+public class Auth {
 
     /**
      * Run Middleware
@@ -25,7 +25,7 @@ public class Before {
      * @param context request object
      */
     public void run(RoutingContext context) {
-        Logger.info("Trigger {} Middleware", Before.class.getName());
+        Logger.info("Trigger {} Middleware", Auth.class.getName());
         Logger.info("Incoming Request [corrlationId={}]", (String) context.get("X-Correlation-ID"));
         context.next();
     }
