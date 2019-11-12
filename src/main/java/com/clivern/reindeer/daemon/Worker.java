@@ -25,6 +25,10 @@ public class Worker extends AbstractVerticle {
 
     private Serializer serializer;
 
+    public static final int POOL_SIZE = 5;
+
+    public static final String POOL_NAME = "daemon_worker";
+
     /**
      * Class Constructor
      *

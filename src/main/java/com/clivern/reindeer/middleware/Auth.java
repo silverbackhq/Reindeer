@@ -26,7 +26,7 @@ public class Auth {
      */
     public void run(RoutingContext context) {
         Logger.info("Trigger {} Middleware", Auth.class.getName());
-        Logger.info("Incoming Request [corrlationId={}]", (String) context.get("X-Correlation-ID"));
+        Logger.info("Incoming Request corrlationId={}", (String) context.get("X-Correlation-ID"));
         context.next();
     }
 }

@@ -24,6 +24,7 @@ import com.clivern.reindeer.migration.Migrate;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
@@ -256,7 +257,27 @@ public class App extends AbstractVerticle {
                         });
 
         Logger.info("Deploying worker verticle {}.", Worker.class.getName().toString());
-        vertx.deployVerticle(this.injector.getInstance(Worker.class));
+
+        vertx.deployVerticle(
+                this.injector.getInstance(Worker.class),
+                new DeploymentOptions()
+                        .setWorker(true)
+                        .setWorkerPoolName(Worker.POOL_NAME)
+                        .setWorkerPoolSize(Worker.POOL_SIZE),
+                res -> {
+                    if (res.succeeded()) {
+                        Logger.info(
+                                "{} verticle deployed, deploymentId {}",
+                                Worker.class.getName().toString(),
+                                res.result());
+                    } else {
+                        Logger.error(
+                                "{} verticle failed to deploy: {}",
+                                Worker.class.getName().toString(),
+                                res.cause());
+                        promise.fail(res.cause());
+                    }
+                });
 
         return promise.future();
     }
