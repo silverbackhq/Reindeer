@@ -72,6 +72,7 @@ dependencies {
     implementation "org.tinylog:tinylog-api:$tinylogVersion"
     implementation "org.tinylog:tinylog-impl:$tinylogVersion"
     implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
+    implementation 'org.hibernate:hibernate-core:5.4.8.Final'
 
     testImplementation "io.vertx:vertx-unit:$vertxVersion"
     testImplementation "io.vertx:vertx-junit5:$vertxVersion"

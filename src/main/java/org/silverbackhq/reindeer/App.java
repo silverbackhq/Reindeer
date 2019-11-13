@@ -169,73 +169,93 @@ public class App extends AbstractVerticle {
         router.get("/")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Health.class).check(vertx, context);
+                            this.injector.getInstance(HealthController.class).check(vertx, context);
                         });
 
         router.get("/_health")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Health.class).check(vertx, context);
+                            this.injector.getInstance(HealthController.class).check(vertx, context);
                         });
 
         router.get("/api/v1/namespace")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Namespace.class).getAll(vertx, context);
+                            this.injector
+                                    .getInstance(NamespaceController.class)
+                                    .getAll(vertx, context);
                         });
 
         router.post("/api/v1/namespace")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Namespace.class).createOne(vertx, context);
+                            this.injector
+                                    .getInstance(NamespaceController.class)
+                                    .createOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Namespace.class).getOne(vertx, context);
+                            this.injector
+                                    .getInstance(NamespaceController.class)
+                                    .getOne(vertx, context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Namespace.class).deleteOne(vertx, context);
+                            this.injector
+                                    .getInstance(NamespaceController.class)
+                                    .deleteOne(vertx, context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Namespace.class).updateOne(vertx, context);
+                            this.injector
+                                    .getInstance(NamespaceController.class)
+                                    .updateOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId/endpoint")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Endpoint.class).getAll(vertx, context);
+                            this.injector
+                                    .getInstance(EndpointController.class)
+                                    .getAll(vertx, context);
                         });
 
         router.post("/api/v1/namespace/:namespaceId/endpoint")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Endpoint.class).createOne(vertx, context);
+                            this.injector
+                                    .getInstance(EndpointController.class)
+                                    .createOne(vertx, context);
                         });
 
         router.get("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Endpoint.class).getOne(vertx, context);
+                            this.injector
+                                    .getInstance(EndpointController.class)
+                                    .getOne(vertx, context);
                         });
 
         router.delete("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Endpoint.class).deleteOne(vertx, context);
+                            this.injector
+                                    .getInstance(EndpointController.class)
+                                    .deleteOne(vertx, context);
                         });
 
         router.put("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
                 .handler(
                         context -> {
-                            this.injector.getInstance(Endpoint.class).updateOne(vertx, context);
+                            this.injector
+                                    .getInstance(EndpointController.class)
+                                    .updateOne(vertx, context);
                         });
 
         Logger.debug("Starting HTTP server.");

@@ -21,11 +21,11 @@ import org.silverbackhq.reindeer.util.ContentType;
 import org.silverbackhq.reindeer.util.JSON;
 import org.silverbackhq.reindeer.util.StatusCode;
 
-/** Health Class */
-public class Health {
+/** HealthController Class */
+public class HealthController {
 
     /**
-     * Health Check
+     * HealthController Check
      *
      * @param context request object
      * @param vertx an instance of Vertx
