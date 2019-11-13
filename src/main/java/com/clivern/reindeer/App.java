@@ -11,16 +11,8 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer;
+package org.silverbackhq.reindeer;
 
-import com.clivern.reindeer.config.Config;
-import com.clivern.reindeer.config.Container;
-import com.clivern.reindeer.config.Logging;
-import com.clivern.reindeer.controller.*;
-import com.clivern.reindeer.daemon.Worker;
-import com.clivern.reindeer.middleware.Auth;
-import com.clivern.reindeer.middleware.Correlation;
-import com.clivern.reindeer.migration.Migrate;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.vertx.core.AbstractVerticle;
@@ -29,6 +21,14 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
 import java.util.List;
+import org.silverbackhq.reindeer.config.Config;
+import org.silverbackhq.reindeer.config.Container;
+import org.silverbackhq.reindeer.config.Logging;
+import org.silverbackhq.reindeer.controller.*;
+import org.silverbackhq.reindeer.daemon.Worker;
+import org.silverbackhq.reindeer.middleware.Auth;
+import org.silverbackhq.reindeer.middleware.Correlation;
+import org.silverbackhq.reindeer.migration.Migrate;
 import org.tinylog.Logger;
 
 /** Main App Class */

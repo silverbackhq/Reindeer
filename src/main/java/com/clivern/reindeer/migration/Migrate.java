@@ -11,10 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer.migration;
+package org.silverbackhq.reindeer.migration;
 
-import com.clivern.reindeer.config.Config;
 import org.flywaydb.core.Flyway;
+import org.silverbackhq.reindeer.config.Config;
 
 /** Migrate Class */
 public class Migrate {

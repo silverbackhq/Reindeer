@@ -29,7 +29,7 @@ spotless {
     }
 }
 
-group = 'com.clivern'
+group = 'org.silverbackhq'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
@@ -56,7 +56,7 @@ application {
 
 sourceCompatibility = '1.8'
 
-def mainVerticleName = 'com.clivern.reindeer.App'
+def mainVerticleName = 'org.silverbackhq.reindeer.App'
 def watchForChange = 'src/**/*'
 def doOnChange = './gradlew classes'
 

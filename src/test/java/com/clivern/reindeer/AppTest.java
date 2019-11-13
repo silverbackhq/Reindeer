@@ -11,11 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer;
+package org.silverbackhq.reindeer;
 
 import static org.junit.Assert.*;
 
-import com.clivern.reindeer.config.Config;
 import io.vertx.core.Vertx;
 import io.vertx.junit5.VertxExtension;
 import io.vertx.junit5.VertxTestContext;
@@ -23,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.silverbackhq.reindeer.config.Config;
 
 @ExtendWith(VertxExtension.class)
 public class AppTest {

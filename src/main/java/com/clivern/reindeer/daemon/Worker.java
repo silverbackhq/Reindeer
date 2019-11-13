@@ -11,13 +11,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer.daemon;
+package org.silverbackhq.reindeer.daemon;
 
-import com.clivern.reindeer.task.*;
-import com.clivern.reindeer.util.Serializer;
 import com.google.inject.Inject;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.Message;
+import org.silverbackhq.reindeer.task.*;
+import org.silverbackhq.reindeer.util.Serializer;
 import org.tinylog.Logger;
 
 /** Worker Class */
@@ -62,7 +62,7 @@ public class Worker extends AbstractVerticle {
             return;
         }
 
-        // Invoke com.clivern.reindeer.task.Log Task
+        // Invoke org.silverbackhq.reindeer.task.Log Task
         if (signalObj.task.equals(Log.class.getName())) {
             new Log().run(signalObj.args);
         }

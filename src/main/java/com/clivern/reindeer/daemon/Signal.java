@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer.daemon;
+package org.silverbackhq.reindeer.daemon;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;

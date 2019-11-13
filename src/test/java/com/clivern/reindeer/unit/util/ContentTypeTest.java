@@ -11,10 +11,8 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer.unit.util;
+package org.silverbackhq.reindeer.unit.util;
 
-import com.clivern.reindeer.TestUtils;
-import com.clivern.reindeer.util.ContentType;
 import io.vertx.core.Vertx;
 import io.vertx.ext.unit.TestOptions;
 import io.vertx.ext.unit.TestSuite;
@@ -22,6 +20,8 @@ import io.vertx.ext.unit.report.ReportOptions;
 import io.vertx.junit5.VertxExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.silverbackhq.reindeer.TestUtils;
+import org.silverbackhq.reindeer.util.ContentType;
 
 /** Content Type Test Cases */
 @ExtendWith(VertxExtension.class)

@@ -11,13 +11,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.clivern.reindeer.middleware;
+package org.silverbackhq.reindeer.middleware;
 
-import com.clivern.reindeer.config.Config;
-import com.clivern.reindeer.util.ContentType;
-import com.clivern.reindeer.util.JSON;
-import com.clivern.reindeer.util.StatusCode;
 import io.vertx.ext.web.RoutingContext;
+import org.silverbackhq.reindeer.config.Config;
+import org.silverbackhq.reindeer.util.ContentType;
+import org.silverbackhq.reindeer.util.JSON;
+import org.silverbackhq.reindeer.util.StatusCode;
 import org.tinylog.Logger;
 
 /** Auth Class */
