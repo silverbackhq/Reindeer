@@ -19,6 +19,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
+import org.silverbackhq.reindeer.config.Config;
 import org.silverbackhq.reindeer.model.*;
 
 public class ORM {
@@ -30,11 +31,21 @@ public class ORM {
             try {
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
-                settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://127.0.0.1:3306/reindeer");
-                settings.put(Environment.USER, "root");
-                settings.put(Environment.PASS, "root");
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+
+                if (Config.getConfig().getString("DB_CONNECTION", "h2").equals(Migrate.DB_H2)) {
+                    settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+                    settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+                }
+
+                if (Config.getConfig().getString("DB_CONNECTION", "h2").equals(Migrate.DB_MySQL)) {
+                    settings.put(Environment.DRIVER, "org.h2.Driver");
+                    settings.put(Environment.DIALECT, "org.hibernate.dialect.H2Dialect");
+                }
+
+                settings.put(Environment.URL, new Migrate().getConnectionString());
+                settings.put(Environment.USER, Config.getConfig().getString("DB_USERNAME", "root"));
+                settings.put(
+                        Environment.PASS, Config.getConfig().getString("DB_PASSWORD", "secret"));
                 settings.put(Environment.SHOW_SQL, "false");
                 //settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 //settings.put(Environment.HBM2DDL_AUTO, "create-drop");
