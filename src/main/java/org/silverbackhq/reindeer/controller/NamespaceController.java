@@ -23,6 +23,7 @@ import org.silverbackhq.reindeer.task.Log;
 import org.silverbackhq.reindeer.util.ContentType;
 import org.silverbackhq.reindeer.util.JSON;
 import org.silverbackhq.reindeer.util.StatusCode;
+import org.tinylog.Logger;
 
 /** NamespaceController Class */
 public class NamespaceController {
@@ -64,9 +65,16 @@ public class NamespaceController {
      */
     public void createOne(Vertx vertx, RoutingContext context) {
 
-        NamespaceEntity namespace = new NamespaceEntity();
-        namespace.setId(new Integer(1));
-        this.namespaceRepository.save(namespace);
+        try {
+            this.namespaceRepository.save(new NamespaceEntity().setId(new Integer(1)));
+        } catch (Exception e) {
+            Logger.error("Something goes wrong: {}", e.getMessage());
+            context.response()
+                    .setStatusCode(StatusCode.INTERNAL_SERVER_ERROR)
+                    .putHeader("content-type", ContentType.JSON)
+                    .end(new JSON().put("error", "Intenal server error.").toString());
+            return;
+        }
 
         context.response()
                 .setStatusCode(StatusCode.OK)

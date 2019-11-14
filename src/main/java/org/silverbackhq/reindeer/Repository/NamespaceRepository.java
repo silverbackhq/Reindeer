@@ -17,20 +17,23 @@ import org.hibernate.Session;
 import org.silverbackhq.reindeer.migration.ORM;
 import org.silverbackhq.reindeer.model.NamespaceEntity;
 
+/** Namespace Repository Class */
 public class NamespaceRepository {
 
-    public Integer save(NamespaceEntity namespaceEntity) {
+    /**
+     * Store Namespace Item
+     *
+     * @param namespaceEntity the namespace model
+     * @return the new namespace ID
+     * @throws Exception if there is error raised
+     */
+    public Integer save(NamespaceEntity namespaceEntity) throws Exception {
 
-        Integer id = new Integer(0);
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        Integer id = (Integer) session.save(namespaceEntity);
+        session.getTransaction().commit();
 
-        try {
-            Session session = ORM.getSessionFactory().openSession();
-            session.beginTransaction();
-            id = (Integer) session.save(namespaceEntity);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            id = new Integer(0);
-        }
         return id;
     }
 }

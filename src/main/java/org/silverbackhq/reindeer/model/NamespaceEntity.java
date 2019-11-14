@@ -32,7 +32,8 @@ public class NamespaceEntity {
         return id;
     }
 
-    public void setId(Integer id) {
+    public NamespaceEntity setId(Integer id) {
         this.id = id;
+        return this;
     }
 }

@@ -48,6 +48,7 @@ ext {
     clivernKangarooVersion = '0.0.1'
     tinylogVersion = '2.0.0'
     mysqlConnectorVersion = '8.0.18'
+    hibernateVersion = '5.4.8.Final'
 }
 
 application {
@@ -72,7 +73,8 @@ dependencies {
     implementation "org.tinylog:tinylog-api:$tinylogVersion"
     implementation "org.tinylog:tinylog-impl:$tinylogVersion"
     implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
-    implementation 'org.hibernate:hibernate-core:5.4.8.Final'
+    implementation "org.hibernate:hibernate-core:$hibernateVersion"
+    implementation "org.hibernate:hibernate-c3p0:$hibernateVersion"
 
     testImplementation "io.vertx:vertx-unit:$vertxVersion"
     testImplementation "io.vertx:vertx-junit5:$vertxVersion"
