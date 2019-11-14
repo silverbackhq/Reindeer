@@ -59,10 +59,13 @@ public class ORM {
             settings.put(Environment.PASS, Config.getConfig().getString("DB_PASSWORD", "secret"));
 
             // TODO allow optional configurations of these values
-            settings.put(Environment.SHOW_SQL, "false");
+            settings.put(Environment.SHOW_SQL, Config.getConfig().getString("APP_DEBUG", "false"));
             settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
             settings.put(
                     "connection.provider_class", "org.hibernate.connection.C3P0ConnectionProvider");
+            settings.put(
+                    "hibernate.jdbc.time_zone",
+                    Config.getConfig().getString("APP_TIMEZONE", "UTC"));
             settings.put("hibernate.c3p0.acquire_increment", "1");
             settings.put("hibernate.c3p0.idle_test_period", "60");
             settings.put("hibernate.c3p0.min_size", "1");

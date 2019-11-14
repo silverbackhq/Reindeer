@@ -66,7 +66,7 @@ public class NamespaceController {
     public void createOne(Vertx vertx, RoutingContext context) {
 
         try {
-            this.namespaceRepository.save(new NamespaceEntity().setId(new Integer(1)));
+            this.namespaceRepository.save(new NamespaceEntity().setName("Name").setSlug("slug"));
         } catch (Exception e) {
             Logger.error("Something goes wrong: {}", e.getMessage());
             context.response()
