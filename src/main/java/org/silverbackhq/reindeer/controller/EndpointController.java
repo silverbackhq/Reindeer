@@ -21,8 +21,8 @@ import org.silverbackhq.reindeer.util.ContentType;
 import org.silverbackhq.reindeer.util.JSON;
 import org.silverbackhq.reindeer.util.StatusCode;
 
-/** Endpoint Class */
-public class Endpoint {
+/** EndpointController Class */
+public class EndpointController {
 
     /**
      * Get namespace endpoints endpoint action

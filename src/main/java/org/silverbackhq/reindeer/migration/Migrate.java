@@ -19,8 +19,8 @@ import org.silverbackhq.reindeer.config.Config;
 /** Migrate Class */
 public class Migrate {
 
-    private static final String DB_H2 = "h2";
-    private static final String DB_MySQL = "mysql";
+    public static final String DB_H2 = "h2";
+    public static final String DB_MySQL = "mysql";
 
     /**
      * Run Migration
@@ -44,7 +44,7 @@ public class Migrate {
      * @return the DB Connection String
      * @throws Exception when unsupported database found
      */
-    private String getConnectionString() throws Exception {
+    public String getConnectionString() throws Exception {
         if (Config.getConfig().getString("DB_CONNECTION", "h2").equals(Migrate.DB_H2)) {
             return String.format(
                     "jdbc:h2:file:%s", Config.getConfig().getString("DB_DATABASE", "./db"));
