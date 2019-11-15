@@ -4,6 +4,6 @@ CREATE TABLE namespace (
     slug varchar(60) not null,
     created_at datetime not null,
     updated_at datetime not null,
-    PRIMARY KEY (id),
-    UNIQUE KEY slug (slug)
+    primary key (id),
+    unique key slug (slug)
 );
