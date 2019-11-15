@@ -34,6 +34,12 @@ public class RequestEntity {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "request")
+    private String request;
+
+    @Column(name = "response")
+    private String response;
+
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
@@ -49,6 +55,24 @@ public class RequestEntity {
      */
     public Integer getId() {
         return this.id;
+    }
+
+    /**
+     * Get request column value
+     *
+     * @return the request column value
+     */
+    public String getRequest() {
+        return this.request;
+    }
+
+    /**
+     * Get response column value
+     *
+     * @return the response column value
+     */
+    public String getResponse() {
+        return this.response;
     }
 
     /**
@@ -77,6 +101,28 @@ public class RequestEntity {
      */
     public RequestEntity setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    /**
+     * Set request column value
+     *
+     * @param request the request column value
+     * @return an instance of the model
+     */
+    public RequestEntity setRequest(String request) {
+        this.request = request;
+        return this;
+    }
+
+    /**
+     * Set response column value
+     *
+     * @param response the response column value
+     * @return an instance of the model
+     */
+    public RequestEntity setResponse(String response) {
+        this.response = response;
         return this;
     }
 

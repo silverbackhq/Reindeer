@@ -34,6 +34,21 @@ public class EndpointEntity {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "kind")
+    private String kind;
+
+    @Column(name = "method")
+    private String method;
+
+    @Column(name = "uri")
+    private String uri;
+
+    @Column(name = "request_rules")
+    private String requestRules;
+
+    @Column(name = "response_rules")
+    private String responseRules;
+
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
@@ -49,6 +64,51 @@ public class EndpointEntity {
      */
     public Integer getId() {
         return this.id;
+    }
+
+    /**
+     * Get kind column value
+     *
+     * @return the kind column value
+     */
+    public String getKind() {
+        return this.kind;
+    }
+
+    /**
+     * Get method column value
+     *
+     * @return the method column value
+     */
+    public String getMethod() {
+        return this.method;
+    }
+
+    /**
+     * Get uri column value
+     *
+     * @return the uri column value
+     */
+    public String getUri() {
+        return this.uri;
+    }
+
+    /**
+     * Get request rules column value
+     *
+     * @return the request rules column value
+     */
+    public String getRequestRules() {
+        return this.requestRules;
+    }
+
+    /**
+     * Get response rules column value
+     *
+     * @return the response rules column value
+     */
+    public String getResponseRules() {
+        return this.responseRules;
     }
 
     /**
@@ -77,6 +137,61 @@ public class EndpointEntity {
      */
     public EndpointEntity setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    /**
+     * Set kind column value
+     *
+     * @param kind the kind column value
+     * @return an instance of the model
+     */
+    public EndpointEntity setKind(String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    /**
+     * Set method column value
+     *
+     * @param method the method column value
+     * @return an instance of the model
+     */
+    public EndpointEntity setMethod(String method) {
+        this.method = method;
+        return this;
+    }
+
+    /**
+     * Set uri column value
+     *
+     * @param uri the uri column value
+     * @return an instance of the model
+     */
+    public EndpointEntity setUri(String uri) {
+        this.uri = uri;
+        return this;
+    }
+
+    /**
+     * Set request rules column value
+     *
+     * @param requestRules the request rules column value
+     * @return an instance of the model
+     */
+    public EndpointEntity setRequestRules(String requestRules) {
+        this.requestRules = requestRules;
+        return this;
+    }
+
+    /**
+     * Set response rules column value
+     *
+     * @param responseRules the response rules column value
+     * @return an instance of the model
+     */
+    public EndpointEntity setResponseRules(String responseRules) {
+        this.responseRules = responseRules;
         return this;
     }
 
