@@ -6,4 +6,4 @@ build
 
 .env
 
-db*
+storage/db*
