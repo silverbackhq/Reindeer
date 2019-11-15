@@ -15,19 +15,19 @@ package org.silverbackhq.reindeer.repository;
 
 import org.hibernate.Session;
 import org.silverbackhq.reindeer.migration.ORM;
-import org.silverbackhq.reindeer.model.NamespaceEntity;
+import org.silverbackhq.reindeer.model.*;
 
 /** Namespace Repository Class */
 public class NamespaceRepository {
 
     /**
-     * Store Namespace Item
+     * Create a new namespace item
      *
      * @param namespaceEntity the namespace model
      * @return the new namespace ID
      * @throws Exception if there is error raised
      */
-    public Integer save(NamespaceEntity namespaceEntity) throws Exception {
+    public Integer createOne(NamespaceEntity namespaceEntity) throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
@@ -35,5 +35,33 @@ public class NamespaceRepository {
         session.getTransaction().commit();
 
         return id;
+    }
+
+    public NamespaceEntity[] getMany() {
+        return null;
+    }
+
+    public NamespaceEntity getOneById(Integer id) {
+        return null;
+    }
+
+    public NamespaceEntity getOneBySlug(String slug) {
+        return null;
+    }
+
+    public Boolean UpdateById(NamespaceEntity namespaceEntity) {
+        return null;
+    }
+
+    public Boolean UpdateBySlug(NamespaceEntity namespaceEntity) {
+        return null;
+    }
+
+    public Boolean deleteOneById(Integer id) {
+        return null;
+    }
+
+    public Boolean deleteOneBySlug(String slug) {
+        return null;
     }
 }
