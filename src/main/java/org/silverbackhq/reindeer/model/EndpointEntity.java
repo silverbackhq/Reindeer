@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.silverbackhq.reindeer.model;
+package org.silverbackhq.reindeer.entity;
 
 import java.sql.Timestamp;
 import javax.persistence.Column;
@@ -133,7 +133,7 @@ public class EndpointEntity {
      * Set id column value
      *
      * @param id the id column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public EndpointEntity setId(Integer id) {
         this.id = id;
@@ -144,7 +144,7 @@ public class EndpointEntity {
      * Set kind column value
      *
      * @param kind the kind column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public EndpointEntity setKind(String kind) {
         this.kind = kind;
@@ -155,7 +155,7 @@ public class EndpointEntity {
      * Set method column value
      *
      * @param method the method column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public EndpointEntity setMethod(String method) {
         this.method = method;
@@ -166,7 +166,7 @@ public class EndpointEntity {
      * Set uri column value
      *
      * @param uri the uri column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public EndpointEntity setUri(String uri) {
         this.uri = uri;
@@ -177,7 +177,7 @@ public class EndpointEntity {
      * Set request rules column value
      *
      * @param requestRules the request rules column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public EndpointEntity setRequestRules(String requestRules) {
         this.requestRules = requestRules;
@@ -188,7 +188,7 @@ public class EndpointEntity {
      * Set response rules column value
      *
      * @param responseRules the response rules column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public EndpointEntity setResponseRules(String responseRules) {
         this.responseRules = responseRules;
@@ -199,7 +199,7 @@ public class EndpointEntity {
      * Set created_at column value
      *
      * @param createdAt the created_at column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public EndpointEntity setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
@@ -210,7 +210,7 @@ public class EndpointEntity {
      * Set updated_at column value
      *
      * @param updatedAt the updated_at column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public EndpointEntity setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;

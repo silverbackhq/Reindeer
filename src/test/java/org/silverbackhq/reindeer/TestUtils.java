@@ -15,11 +15,31 @@ package org.silverbackhq.reindeer;
 
 import static org.junit.Assert.*;
 
+import org.silverbackhq.reindeer.config.Config;
+import org.silverbackhq.reindeer.entity.*;
+import org.silverbackhq.reindeer.migration.Migrate;
+
 /** Test Utils */
 public class TestUtils {
 
     public static final String CYAN = "\033[0;36m";
     public static final String DEFAULT = "\033[0m";
+    public static Boolean configured = false;
+
+    /**
+     * Init App
+     *
+     * @param Exception when error raised
+     */
+    public static void init() throws Exception {
+
+        if (TestUtils.configured) {
+            return;
+        }
+        TestUtils.configured = true;
+        Config.getConfig().load("src/test/resources/.env.test");
+        new Migrate().run();
+    }
 
     /**
      * Print a message

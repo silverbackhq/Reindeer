@@ -13,32 +13,111 @@
  */
 package org.silverbackhq.reindeer.repository;
 
-import org.silverbackhq.reindeer.model.*;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.silverbackhq.reindeer.entity.*;
+import org.silverbackhq.reindeer.migration.ORM;
 
 /** Endpoint Repository Class */
 public class EndpointRepository {
 
-    public Integer createOne(EndpointEntity endpointEntity) {
-        return null;
+    /**
+     * Create an endpoint
+     *
+     * @param endpointEntity the endpoint entity
+     * @return the new entity Id
+     * @throws Exception if there is error raised
+     */
+    public Integer createOne(EndpointEntity endpointEntity) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        Integer id = (Integer) session.save(endpointEntity);
+        session.getTransaction().commit();
+
+        return id;
     }
 
     public EndpointEntity[] getManyByNamespaceId(Integer namespaceId) {
         return null;
     }
 
-    public EndpointEntity getOneById(Integer id) {
-        return null;
+    /**
+     * Get endpoint by id
+     *
+     * @param id the endpoint id
+     * @return the endpoint instance
+     * @throws Exception if there is error raised
+     */
+    public EndpointEntity getOneById(Integer id) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        EndpointEntity endpointEntity = session.get(EndpointEntity.class, id);
+        session.getTransaction().commit();
+
+        return endpointEntity;
     }
 
-    public EndpointEntity getOneByMethodAndURI(String method, String URI) {
-        return null;
+    /**
+     * Get endpoint by method and URI
+     *
+     * @param method the endpoint method
+     * @param URI the endpoint URI
+     * @return the endpoint instance
+     * @throws Exception if there is error raised
+     */
+    public EndpointEntity getOneByMethodAndURI(String method, String URI) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Endpoint where uri=:uri and method=:method");
+        query.setParameter("method", method);
+        query.setParameter("uri", URI);
+        EndpointEntity endpointEntity = (EndpointEntity) query.uniqueResult();
+        session.getTransaction().commit();
+
+        return endpointEntity;
     }
 
-    public Boolean UpdateById(EndpointEntity endpointEntity) {
-        return null;
+    /**
+     * Update Endpoint
+     *
+     * @param endpointEntity the endpoint entity
+     * @return whether updated or not
+     * @throws Exception if there is error raised
+     */
+    public Boolean update(EndpointEntity endpointEntity) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(endpointEntity);
+        session.getTransaction().commit();
+
+        return true;
     }
 
-    public Boolean deleteOneById(Integer id) {
-        return null;
+    /**
+     * Delete endpoint by id
+     *
+     * @param id the endpoint id
+     * @return whether deleted or not
+     * @throws Exception if there is error raised
+     */
+    public Boolean deleteOneById(Integer id) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        EndpointEntity endpointEntity = session.get(EndpointEntity.class, id);
+
+        if (endpointEntity != null) {
+            session.delete(endpointEntity);
+            session.getTransaction().commit();
+            return true;
+        }
+
+        session.getTransaction().commit();
+
+        return false;
     }
 }

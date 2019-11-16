@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.silverbackhq.reindeer.model;
+package org.silverbackhq.reindeer.entity;
 
 import java.sql.Timestamp;
 import javax.persistence.Column;
@@ -97,7 +97,7 @@ public class RequestEntity {
      * Set id column value
      *
      * @param id the id column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public RequestEntity setId(Integer id) {
         this.id = id;
@@ -108,7 +108,7 @@ public class RequestEntity {
      * Set request column value
      *
      * @param request the request column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public RequestEntity setRequest(String request) {
         this.request = request;
@@ -119,7 +119,7 @@ public class RequestEntity {
      * Set response column value
      *
      * @param response the response column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public RequestEntity setResponse(String response) {
         this.response = response;
@@ -130,7 +130,7 @@ public class RequestEntity {
      * Set created_at column value
      *
      * @param createdAt the created_at column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public RequestEntity setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
@@ -141,7 +141,7 @@ public class RequestEntity {
      * Set updated_at column value
      *
      * @param updatedAt the updated_at column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public RequestEntity setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;

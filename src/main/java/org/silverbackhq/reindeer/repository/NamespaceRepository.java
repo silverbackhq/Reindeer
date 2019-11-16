@@ -13,9 +13,10 @@
  */
 package org.silverbackhq.reindeer.repository;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.silverbackhq.reindeer.entity.*;
 import org.silverbackhq.reindeer.migration.ORM;
-import org.silverbackhq.reindeer.model.*;
 
 /** Namespace Repository Class */
 public class NamespaceRepository {
@@ -23,7 +24,7 @@ public class NamespaceRepository {
     /**
      * Create a new namespace item
      *
-     * @param namespaceEntity the namespace model
+     * @param namespaceEntity the namespace entity
      * @return the new namespace ID
      * @throws Exception if there is error raised
      */
@@ -41,27 +42,82 @@ public class NamespaceRepository {
         return null;
     }
 
-    public NamespaceEntity getOneById(Integer id) {
-        return null;
+    /**
+     * Get namespace by id
+     *
+     * @param id the namespace id
+     * @return the namespace entity
+     * @throws Exception if there is error raised
+     */
+    public NamespaceEntity getOneById(Integer id) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        NamespaceEntity namespaceEntity = session.get(NamespaceEntity.class, id);
+        session.getTransaction().commit();
+
+        return namespaceEntity;
     }
 
-    public NamespaceEntity getOneBySlug(String slug) {
-        return null;
+    /**
+     * Get namespace by slug
+     *
+     * @param slug the namespace slug
+     * @return the namespace entity
+     * @throws Exception if there is error raised
+     */
+    public NamespaceEntity getOneBySlug(String slug) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query =
+                session.createQuery(
+                        String.format(
+                                "from %s where slug=:slug", NamespaceEntity.class.getSimpleName()));
+        query.setParameter("slug", slug);
+        NamespaceEntity namespaceEntity = (NamespaceEntity) query.uniqueResult();
+        session.getTransaction().commit();
+
+        return namespaceEntity;
     }
 
-    public Boolean UpdateById(NamespaceEntity namespaceEntity) {
-        return null;
+    /**
+     * Update namespace
+     *
+     * @param namespaceEntity the namespace entity
+     * @return whether updated or not
+     * @throws Exception if there is error raised
+     */
+    public Boolean update(NamespaceEntity namespaceEntity) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(namespaceEntity);
+        session.getTransaction().commit();
+
+        return true;
     }
 
-    public Boolean UpdateBySlug(NamespaceEntity namespaceEntity) {
-        return null;
-    }
+    /**
+     * Delete a namespace by id
+     *
+     * @param id the namespace id
+     * @return whether deleted or not
+     * @throws Exception if there is error raised
+     */
+    public Boolean deleteOneById(Integer id) throws Exception {
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        NamespaceEntity namespaceEntity = session.get(NamespaceEntity.class, id);
 
-    public Boolean deleteOneById(Integer id) {
-        return null;
-    }
+        if (namespaceEntity != null) {
+            session.delete(namespaceEntity);
+            session.getTransaction().commit();
+            return true;
+        }
 
-    public Boolean deleteOneBySlug(String slug) {
-        return null;
+        session.getTransaction().commit();
+
+        return false;
     }
 }

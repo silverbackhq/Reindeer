@@ -13,28 +13,88 @@
  */
 package org.silverbackhq.reindeer.repository;
 
-import org.silverbackhq.reindeer.model.*;
+import org.hibernate.Session;
+import org.silverbackhq.reindeer.entity.*;
+import org.silverbackhq.reindeer.migration.ORM;
 
 /** Request Repository Class */
 public class RequestRepository {
 
-    public Integer createOne(RequestEntity requestEntity) {
-        return null;
+    /**
+     * Create a request entity
+     *
+     * @param requestEntity the request entity
+     * @return the new request id
+     * @throws Exception if there is error raised
+     */
+    public Integer createOne(RequestEntity requestEntity) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        Integer id = (Integer) session.save(requestEntity);
+        session.getTransaction().commit();
+
+        return id;
     }
 
     public RequestEntity[] getManyByEndpointId(Integer namespaceId) {
         return null;
     }
 
-    public RequestEntity getOneById(Integer id) {
-        return null;
+    /**
+     * Get request by id
+     *
+     * @param id the request id
+     * @return the request entity
+     * @throws Exception if there is error raised
+     */
+    public RequestEntity getOneById(Integer id) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        RequestEntity requestEntity = session.get(RequestEntity.class, id);
+        session.getTransaction().commit();
+
+        return requestEntity;
     }
 
-    public Boolean UpdateById(RequestEntity requestEntity) {
-        return null;
+    /**
+     * Update request
+     *
+     * @param requestEntity the request entity
+     * @return whether updated or not
+     * @throws Exception if there is error raised
+     */
+    public Boolean update(RequestEntity requestEntity) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(requestEntity);
+        session.getTransaction().commit();
+
+        return true;
     }
 
-    public Boolean deleteOneById(Integer id) {
-        return null;
+    /**
+     * Delete request by id
+     *
+     * @param id the request id
+     * @return whether deleted or not
+     * @throws Exception if there is error raised
+     */
+    public Boolean deleteOneById(Integer id) throws Exception {
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        RequestEntity requestEntity = session.get(RequestEntity.class, id);
+
+        if (requestEntity != null) {
+            session.delete(requestEntity);
+            session.getTransaction().commit();
+            return true;
+        }
+
+        session.getTransaction().commit();
+
+        return false;
     }
 }

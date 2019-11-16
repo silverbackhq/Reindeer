@@ -20,7 +20,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import org.silverbackhq.reindeer.config.Config;
-import org.silverbackhq.reindeer.model.NamespaceEntity;
+import org.silverbackhq.reindeer.entity.NamespaceEntity;
 import org.tinylog.Logger;
 
 /** ORM Class */

@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.silverbackhq.reindeer.model;
+package org.silverbackhq.reindeer.entity;
 
 import java.sql.Timestamp;
 import javax.persistence.Column;
@@ -97,7 +97,7 @@ public class NamespaceEntity {
      * Set id column value
      *
      * @param id the id column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public NamespaceEntity setId(Integer id) {
         this.id = id;
@@ -108,7 +108,7 @@ public class NamespaceEntity {
      * Set name column value
      *
      * @param name the name column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public NamespaceEntity setName(String name) {
         this.name = name;
@@ -119,7 +119,7 @@ public class NamespaceEntity {
      * Set slug column value
      *
      * @param slug the slug column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public NamespaceEntity setSlug(String slug) {
         this.slug = slug;
@@ -130,7 +130,7 @@ public class NamespaceEntity {
      * Set created_at column value
      *
      * @param createdAt the created_at column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public NamespaceEntity setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
@@ -141,7 +141,7 @@ public class NamespaceEntity {
      * Set updated_at column value
      *
      * @param updatedAt the updated_at column value
-     * @return an instance of the model
+     * @return an instance of the entity
      */
     public NamespaceEntity setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
