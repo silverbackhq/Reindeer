@@ -21,10 +21,18 @@ import io.vertx.junit5.VertxExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.silverbackhq.reindeer.TestUtils;
+import org.silverbackhq.reindeer.entity.*;
+import org.silverbackhq.reindeer.repository.*;
 
 /** Request Repository Test Cases */
 @ExtendWith(VertxExtension.class)
 public class RequestRepositoryTest {
+
+    RequestRepository requestRepository;
+
+    public RequestRepositoryTest() throws Exception {
+        TestUtils.init();
+    }
 
     @Test
     void test_all(Vertx vertx) {
@@ -32,7 +40,10 @@ public class RequestRepositoryTest {
         TestOptions options = new TestOptions().addReporter(new ReportOptions().setTo("console"));
         TestSuite suite = TestSuite.create(RequestRepositoryTest.class.getName());
 
-        suite.before(context -> {});
+        suite.before(
+                context -> {
+                    this.requestRepository = new RequestRepository();
+                });
 
         suite.after(context -> {});
 

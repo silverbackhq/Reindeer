@@ -20,7 +20,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import org.silverbackhq.reindeer.config.Config;
-import org.silverbackhq.reindeer.entity.NamespaceEntity;
+import org.silverbackhq.reindeer.entity.*;
 import org.tinylog.Logger;
 
 /** ORM Class */
@@ -77,6 +77,8 @@ public class ORM {
 
             configuration.setProperties(settings);
             configuration.addAnnotatedClass(NamespaceEntity.class);
+            configuration.addAnnotatedClass(EndpointEntity.class);
+            configuration.addAnnotatedClass(RequestEntity.class);
 
             ServiceRegistry serviceRegistry =
                     new StandardServiceRegistryBuilder()

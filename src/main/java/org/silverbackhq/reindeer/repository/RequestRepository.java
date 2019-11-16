@@ -13,6 +13,8 @@
  */
 package org.silverbackhq.reindeer.repository;
 
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.silverbackhq.reindeer.entity.*;
 import org.silverbackhq.reindeer.migration.ORM;
@@ -37,8 +39,27 @@ public class RequestRepository {
         return id;
     }
 
-    public RequestEntity[] getManyByEndpointId(Integer namespaceId) {
-        return null;
+    /**
+     * Get requests by endpoint id
+     *
+     * @param endpointId the endpoint id
+     * @return a list of requests
+     * @throws Exception if there is error raised
+     */
+    public List<RequestEntity> getManyByEndpointId(Integer endpointId) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query =
+                session.createQuery(
+                        String.format(
+                                "from %s where endpoint_id=:endpoint_id",
+                                RequestEntity.class.getSimpleName()));
+        query.setParameter("endpoint_id", endpointId);
+        List<RequestEntity> list = query.list();
+        session.getTransaction().commit();
+
+        return list;
     }
 
     /**
@@ -83,6 +104,7 @@ public class RequestRepository {
      * @throws Exception if there is error raised
      */
     public Boolean deleteOneById(Integer id) throws Exception {
+
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
         RequestEntity requestEntity = session.get(RequestEntity.class, id);

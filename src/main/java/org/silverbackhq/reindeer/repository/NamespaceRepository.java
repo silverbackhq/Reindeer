@@ -13,6 +13,7 @@
  */
 package org.silverbackhq.reindeer.repository;
 
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.silverbackhq.reindeer.entity.*;
@@ -38,8 +39,23 @@ public class NamespaceRepository {
         return id;
     }
 
-    public NamespaceEntity[] getMany() {
-        return null;
+    /**
+     * Get All Namespaces
+     *
+     * @return a list of all namespaces
+     * @throws Exception if there is error raised
+     */
+    public List<NamespaceEntity> getMany() throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query =
+                session.createQuery(
+                        String.format("from %s", NamespaceEntity.class.getSimpleName()));
+        List<NamespaceEntity> list = query.list();
+        session.getTransaction().commit();
+
+        return list;
     }
 
     /**
@@ -106,6 +122,7 @@ public class NamespaceRepository {
      * @throws Exception if there is error raised
      */
     public Boolean deleteOneById(Integer id) throws Exception {
+
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
         NamespaceEntity namespaceEntity = session.get(NamespaceEntity.class, id);

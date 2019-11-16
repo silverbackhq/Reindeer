@@ -13,6 +13,7 @@
  */
 package org.silverbackhq.reindeer.repository;
 
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.silverbackhq.reindeer.entity.*;
@@ -38,8 +39,27 @@ public class EndpointRepository {
         return id;
     }
 
-    public EndpointEntity[] getManyByNamespaceId(Integer namespaceId) {
-        return null;
+    /**
+     * Get endpoints by namespace id
+     *
+     * @param namespaceId the namespace id
+     * @return a list of endpoints
+     * @throws Exception if there is error raised
+     */
+    public List<EndpointEntity> getManyByNamespaceId(Integer namespaceId) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query =
+                session.createQuery(
+                        String.format(
+                                "from %s where namespace_id=:namespace_id",
+                                EndpointEntity.class.getSimpleName()));
+        query.setParameter("namespace_id", namespaceId);
+        List<EndpointEntity> list = query.list();
+        session.getTransaction().commit();
+
+        return list;
     }
 
     /**
@@ -62,16 +82,23 @@ public class EndpointRepository {
     /**
      * Get endpoint by method and URI
      *
+     * @param namespaceId the namespace id
      * @param method the endpoint method
      * @param URI the endpoint URI
      * @return the endpoint instance
      * @throws Exception if there is error raised
      */
-    public EndpointEntity getOneByMethodAndURI(String method, String URI) throws Exception {
+    public EndpointEntity getOneByMethodAndURI(Integer namespaceId, String method, String URI)
+            throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from Endpoint where uri=:uri and method=:method");
+        Query query =
+                session.createQuery(
+                        String.format(
+                                "from %s where namespace_id=:namespace_id uri=:uri and method=:method",
+                                EndpointEntity.class.getSimpleName()));
+        query.setParameter("namespace_id", namespaceId);
         query.setParameter("method", method);
         query.setParameter("uri", URI);
         EndpointEntity endpointEntity = (EndpointEntity) query.uniqueResult();

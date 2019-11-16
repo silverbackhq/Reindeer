@@ -62,7 +62,23 @@ public class NamespaceRepositoryTest {
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Exception while running NamespaceRepository::createOne test case: %s",
+                                        "Error while running NamespaceRepository::createOne test case: %s",
+                                        e.getMessage()));
+                    }
+                });
+
+        suite.test(
+                String.format(
+                        "%s Test NamespaceRepository::getMany %s",
+                        TestUtils.CYAN, TestUtils.DEFAULT),
+                context -> {
+                    try {
+                        context.assertEquals(
+                                this.namespaceRepository.getMany().get(0).getName(), "TestName");
+                    } catch (Exception e) {
+                        context.fail(
+                                String.format(
+                                        "Error while running NamespaceRepository::getMany test case: %s",
                                         e.getMessage()));
                     }
                 });
@@ -79,7 +95,7 @@ public class NamespaceRepositoryTest {
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Exception while running NamespaceRepository::getOneById test case: %s",
+                                        "Error while running NamespaceRepository::getOneById test case: %s",
                                         e.getMessage()));
                     }
                 });
@@ -96,7 +112,7 @@ public class NamespaceRepositoryTest {
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Exception while running NamespaceRepository::getOneBySlug test case: %s",
+                                        "Error while running NamespaceRepository::getOneBySlug test case: %s",
                                         e.getMessage()));
                     }
                 });
@@ -118,7 +134,7 @@ public class NamespaceRepositoryTest {
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Exception while running NamespaceRepository::update test case: %s",
+                                        "Error while running NamespaceRepository::update test case: %s",
                                         e.getMessage()));
                     }
                 });
@@ -136,7 +152,7 @@ public class NamespaceRepositoryTest {
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Exception while running NamespaceRepository::deleteOneById test case: %s",
+                                        "Error while running NamespaceRepository::deleteOneById test case: %s",
                                         e.getMessage()));
                     }
                 });
