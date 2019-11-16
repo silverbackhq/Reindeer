@@ -34,6 +34,9 @@ public class RequestEntity {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "endpoint_id")
+    private Integer endpointId;
+
     @Column(name = "request")
     private String request;
 
@@ -55,6 +58,15 @@ public class RequestEntity {
      */
     public Integer getId() {
         return this.id;
+    }
+
+    /**
+     * Get ednpoint id column value
+     *
+     * @return the ednpoint column value
+     */
+    public Integer getEndpointId() {
+        return this.endpointId;
     }
 
     /**
@@ -101,6 +113,17 @@ public class RequestEntity {
      */
     public RequestEntity setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    /**
+     * Set endpoint id column value
+     *
+     * @param endpointId the endpoint id column value
+     * @return an instance of the entity
+     */
+    public RequestEntity setEndpointId(Integer endpointId) {
+        this.endpointId = endpointId;
         return this;
     }
 

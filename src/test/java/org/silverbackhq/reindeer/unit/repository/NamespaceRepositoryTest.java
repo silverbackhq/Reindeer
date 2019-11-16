@@ -36,6 +36,7 @@ public class NamespaceRepositoryTest {
 
     @Test
     void test_all(Vertx vertx) {
+
         TestOptions options = new TestOptions().addReporter(new ReportOptions().setTo("console"));
         TestSuite suite = TestSuite.create(NamespaceRepositoryTest.class.getName());
 
@@ -139,6 +140,7 @@ public class NamespaceRepositoryTest {
                                         e.getMessage()));
                     }
                 });
+
         suite.run(options);
     }
 }

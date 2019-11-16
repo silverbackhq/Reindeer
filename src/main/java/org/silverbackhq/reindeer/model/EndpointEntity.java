@@ -34,6 +34,9 @@ public class EndpointEntity {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "namespace_id")
+    private Integer namespaceId;
+
     @Column(name = "kind")
     private String kind;
 
@@ -64,6 +67,15 @@ public class EndpointEntity {
      */
     public Integer getId() {
         return this.id;
+    }
+
+    /**
+     * Get namespace id column value
+     *
+     * @return the namespace id column value
+     */
+    public Integer getNamespaceId() {
+        return this.namespaceId;
     }
 
     /**
@@ -137,6 +149,17 @@ public class EndpointEntity {
      */
     public EndpointEntity setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    /**
+     * Set namespace id column value
+     *
+     * @param namespaceId the namespace id column value
+     * @return an instance of the entity
+     */
+    public EndpointEntity setNamespaceId(Integer namespaceId) {
+        this.namespaceId = namespaceId;
         return this;
     }
 

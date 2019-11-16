@@ -28,6 +28,7 @@ public class EndpointRepositoryTest {
 
     @Test
     void test_all(Vertx vertx) {
+
         TestOptions options = new TestOptions().addReporter(new ReportOptions().setTo("console"));
         TestSuite suite = TestSuite.create(EndpointRepositoryTest.class.getName());
 
