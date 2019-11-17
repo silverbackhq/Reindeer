@@ -17,13 +17,11 @@ import com.google.inject.Inject;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
 import org.silverbackhq.reindeer.daemon.Worker;
-import org.silverbackhq.reindeer.model.NamespaceEntity;
 import org.silverbackhq.reindeer.repository.NamespaceRepository;
 import org.silverbackhq.reindeer.task.Log;
 import org.silverbackhq.reindeer.util.ContentType;
 import org.silverbackhq.reindeer.util.JSON;
 import org.silverbackhq.reindeer.util.StatusCode;
-import org.tinylog.Logger;
 
 /** NamespaceController Class */
 public class NamespaceController {
@@ -64,18 +62,6 @@ public class NamespaceController {
      * @param vertx an instance of Vertx
      */
     public void createOne(Vertx vertx, RoutingContext context) {
-
-        try {
-            this.namespaceRepository.save(new NamespaceEntity().setId(new Integer(1)));
-        } catch (Exception e) {
-            Logger.error("Something goes wrong: {}", e.getMessage());
-            context.response()
-                    .setStatusCode(StatusCode.INTERNAL_SERVER_ERROR)
-                    .putHeader("content-type", ContentType.JSON)
-                    .end(new JSON().put("error", "Intenal server error.").toString());
-            return;
-        }
-
         context.response()
                 .setStatusCode(StatusCode.OK)
                 .putHeader("content-type", ContentType.JSON)

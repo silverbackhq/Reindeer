@@ -20,7 +20,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import org.silverbackhq.reindeer.config.Config;
-import org.silverbackhq.reindeer.model.NamespaceEntity;
+import org.silverbackhq.reindeer.entity.*;
 import org.tinylog.Logger;
 
 /** ORM Class */
@@ -59,10 +59,13 @@ public class ORM {
             settings.put(Environment.PASS, Config.getConfig().getString("DB_PASSWORD", "secret"));
 
             // TODO allow optional configurations of these values
-            settings.put(Environment.SHOW_SQL, "false");
+            settings.put(Environment.SHOW_SQL, Config.getConfig().getString("APP_DEBUG", "false"));
             settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
             settings.put(
                     "connection.provider_class", "org.hibernate.connection.C3P0ConnectionProvider");
+            settings.put(
+                    "hibernate.jdbc.time_zone",
+                    Config.getConfig().getString("APP_TIMEZONE", "UTC"));
             settings.put("hibernate.c3p0.acquire_increment", "1");
             settings.put("hibernate.c3p0.idle_test_period", "60");
             settings.put("hibernate.c3p0.min_size", "1");
@@ -74,6 +77,8 @@ public class ORM {
 
             configuration.setProperties(settings);
             configuration.addAnnotatedClass(NamespaceEntity.class);
+            configuration.addAnnotatedClass(EndpointEntity.class);
+            configuration.addAnnotatedClass(RequestEntity.class);
 
             ServiceRegistry serviceRegistry =
                     new StandardServiceRegistryBuilder()

@@ -25,20 +25,23 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "namespace")
+@Table(name = "request")
 @DynamicUpdate
-public class NamespaceEntity {
+public class RequestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "endpoint_id")
+    private Integer endpointId;
 
-    @Column(name = "slug")
-    private String slug;
+    @Column(name = "request")
+    private String request;
+
+    @Column(name = "response")
+    private String response;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
@@ -58,21 +61,30 @@ public class NamespaceEntity {
     }
 
     /**
-     * Get name column value
+     * Get ednpoint id column value
      *
-     * @return the name column value
+     * @return the ednpoint column value
      */
-    public String getName() {
-        return this.name;
+    public Integer getEndpointId() {
+        return this.endpointId;
     }
 
     /**
-     * Get slug column value
+     * Get request column value
      *
-     * @return the slug column value
+     * @return the request column value
      */
-    public String getSlug() {
-        return this.slug;
+    public String getRequest() {
+        return this.request;
+    }
+
+    /**
+     * Get response column value
+     *
+     * @return the response column value
+     */
+    public String getResponse() {
+        return this.response;
     }
 
     /**
@@ -99,30 +111,41 @@ public class NamespaceEntity {
      * @param id the id column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setId(Integer id) {
+    public RequestEntity setId(Integer id) {
         this.id = id;
         return this;
     }
 
     /**
-     * Set name column value
+     * Set endpoint id column value
      *
-     * @param name the name column value
+     * @param endpointId the endpoint id column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setName(String name) {
-        this.name = name;
+    public RequestEntity setEndpointId(Integer endpointId) {
+        this.endpointId = endpointId;
         return this;
     }
 
     /**
-     * Set slug column value
+     * Set request column value
      *
-     * @param slug the slug column value
+     * @param request the request column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setSlug(String slug) {
-        this.slug = slug;
+    public RequestEntity setRequest(String request) {
+        this.request = request;
+        return this;
+    }
+
+    /**
+     * Set response column value
+     *
+     * @param response the response column value
+     * @return an instance of the entity
+     */
+    public RequestEntity setResponse(String response) {
+        this.response = response;
         return this;
     }
 
@@ -132,7 +155,7 @@ public class NamespaceEntity {
      * @param createdAt the created_at column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setCreatedAt(Timestamp createdAt) {
+    public RequestEntity setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -143,7 +166,7 @@ public class NamespaceEntity {
      * @param updatedAt the updated_at column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setUpdatedAt(Timestamp updatedAt) {
+    public RequestEntity setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }

@@ -19,105 +19,87 @@ import org.hibernate.Session;
 import org.silverbackhq.reindeer.entity.*;
 import org.silverbackhq.reindeer.migration.ORM;
 
-/** Namespace Repository Class */
-public class NamespaceRepository {
+/** Request Repository Class */
+public class RequestRepository {
 
     /**
-     * Create a new namespace item
+     * Create a request entity
      *
-     * @param namespaceEntity the namespace entity
-     * @return the new namespace ID
+     * @param requestEntity the request entity
+     * @return the new request id
      * @throws Exception if there is error raised
      */
-    public Integer createOne(NamespaceEntity namespaceEntity) throws Exception {
+    public Integer createOne(RequestEntity requestEntity) throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
-        Integer id = (Integer) session.save(namespaceEntity);
+        Integer id = (Integer) session.save(requestEntity);
         session.getTransaction().commit();
 
         return id;
     }
 
     /**
-     * Get All Namespaces
+     * Get requests by endpoint id
      *
-     * @return a list of all namespaces
+     * @param endpointId the endpoint id
+     * @return a list of requests
      * @throws Exception if there is error raised
      */
-    public List<NamespaceEntity> getMany() throws Exception {
-
-        Session session = ORM.getSessionFactory().openSession();
-        session.beginTransaction();
-        Query query =
-                session.createQuery(
-                        String.format("from %s", NamespaceEntity.class.getSimpleName()));
-        List<NamespaceEntity> list = query.list();
-        session.getTransaction().commit();
-
-        return list;
-    }
-
-    /**
-     * Get namespace by id
-     *
-     * @param id the namespace id
-     * @return the namespace entity
-     * @throws Exception if there is error raised
-     */
-    public NamespaceEntity getOneById(Integer id) throws Exception {
-
-        Session session = ORM.getSessionFactory().openSession();
-        session.beginTransaction();
-        NamespaceEntity namespaceEntity = session.get(NamespaceEntity.class, id);
-        session.getTransaction().commit();
-
-        return namespaceEntity;
-    }
-
-    /**
-     * Get namespace by slug
-     *
-     * @param slug the namespace slug
-     * @return the namespace entity
-     * @throws Exception if there is error raised
-     */
-    public NamespaceEntity getOneBySlug(String slug) throws Exception {
+    public List<RequestEntity> getManyByEndpointId(Integer endpointId) throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
         Query query =
                 session.createQuery(
                         String.format(
-                                "from %s where slug=:slug", NamespaceEntity.class.getSimpleName()));
-        query.setParameter("slug", slug);
-        NamespaceEntity namespaceEntity = (NamespaceEntity) query.uniqueResult();
+                                "from %s where endpoint_id=:endpoint_id",
+                                RequestEntity.class.getSimpleName()));
+        query.setParameter("endpoint_id", endpointId);
+        List<RequestEntity> list = query.list();
         session.getTransaction().commit();
 
-        return namespaceEntity;
+        return list;
     }
 
     /**
-     * Update namespace
+     * Get request by id
      *
-     * @param namespaceEntity the namespace entity
-     * @return whether updated or not
+     * @param id the request id
+     * @return the request entity
      * @throws Exception if there is error raised
      */
-    public Boolean update(NamespaceEntity namespaceEntity) throws Exception {
+    public RequestEntity getOneById(Integer id) throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
-        session.update(namespaceEntity);
+        RequestEntity requestEntity = session.get(RequestEntity.class, id);
+        session.getTransaction().commit();
+
+        return requestEntity;
+    }
+
+    /**
+     * Update request
+     *
+     * @param requestEntity the request entity
+     * @return whether updated or not
+     * @throws Exception if there is error raised
+     */
+    public Boolean update(RequestEntity requestEntity) throws Exception {
+
+        Session session = ORM.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(requestEntity);
         session.getTransaction().commit();
 
         return true;
     }
 
     /**
-     * Delete a namespace by id
+     * Delete request by id
      *
-     * @param id the namespace id
+     * @param id the request id
      * @return whether deleted or not
      * @throws Exception if there is error raised
      */
@@ -125,10 +107,10 @@ public class NamespaceRepository {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
-        NamespaceEntity namespaceEntity = session.get(NamespaceEntity.class, id);
+        RequestEntity requestEntity = session.get(RequestEntity.class, id);
 
-        if (namespaceEntity != null) {
-            session.delete(namespaceEntity);
+        if (requestEntity != null) {
+            session.delete(requestEntity);
             session.getTransaction().commit();
             return true;
         }
