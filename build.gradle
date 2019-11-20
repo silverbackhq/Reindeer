@@ -43,7 +43,7 @@ ext {
     flywayCoreVersion = '6.0.8'
     h2Version = '1.4.197'
     googleJsonSimpleVersion = '1.1.1'
-    googleGsonVersion = '2.8.5'
+    googleGsonVersion = '2.8.6'
     googleInjectGuiceVersion = '4.1.0'
     clivernKangarooVersion = '0.0.1'
     tinylogVersion = '2.0.0'
