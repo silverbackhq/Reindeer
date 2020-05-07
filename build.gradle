@@ -47,7 +47,7 @@ ext {
     googleInjectGuiceVersion = '4.2.2'
     clivernKangarooVersion = '0.0.1'
     tinylogVersion = '2.0.1'
-    mysqlConnectorVersion = '8.0.19'
+    mysqlConnectorVersion = '8.0.20'
     hibernateVersion = '5.4.12.Final'
 }
 
