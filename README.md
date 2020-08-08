@@ -73,6 +73,17 @@ $ make
 ```
 
 
+### Deployment:
+
+You can build and run the jar like this:
+
+```bash
+$ make build
+
+$ java -jar build/libs/reindeer-0.0.1-fat.jar --env=/path/to/.env
+```
+
+
 ## Versioning
 
 For transparency into our release cycle and in striving to maintain backward compatibility, Reindeer is maintained under the [Semantic Versioning guidelines](https://semver.org/) and release process is predictable and business-friendly.
