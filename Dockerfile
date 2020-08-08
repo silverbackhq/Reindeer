@@ -1,5 +1,5 @@
 # To build
-# $ docker build -t clivern/reindeer:1.0.0 .
+# $ docker build -t clivern/reindeer:1.0.1 .
 #
 # To Run
 # $ docker run -d \
@@ -12,7 +12,7 @@
 #    --env DB_PASSWORD=secret \
 #    --name=reindeer \
 #    --publish 8000:8000 \
-#    clivern/reindeer:1.0.0
+#    clivern/reindeer:1.0.1
 
 FROM gradle:4.10.3-jdk8-alpine as builder
 
@@ -35,9 +35,9 @@ ENV REINDEER_LOAD_FROM=system
 ENV APP_PORT=8000
 ENV DB_DATABASE=/app/storage/db
 
-COPY --from=builder /home/gradle/src/build/libs/reindeer-1.0.0-fat.jar /app/releases/reindeer-1.0.0-fat.jar
+COPY --from=builder /home/gradle/src/build/libs/reindeer-1.0.1-fat.jar /app/releases/reindeer-1.0.1-fat.jar
 COPY --from=builder /home/gradle/src/.env.example /app/configs/.env
 
 EXPOSE 8000
 
-ENTRYPOINT ["java", "-jar", "/app/releases/reindeer-1.0.0-fat.jar", "--env=/app/configs/.env"]
+ENTRYPOINT ["java", "-jar", "/app/releases/reindeer-1.0.1-fat.jar", "--env=/app/configs/.env"]
