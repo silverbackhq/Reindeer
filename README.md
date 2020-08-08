@@ -10,7 +10,7 @@
     </p>
 </p>
 
-This project is mainly for personal & testing purposes but you can simply fork or click Use this template button! somewhere on this page.
+This project is mainly for personal & testing purposes but you can simply fork or use it as a template.
 
 ## Documentation
 
