@@ -13,7 +13,7 @@
 #    --env DB_PASSWORD=secret \
 #    --name=reindeer \
 #    --publish 8000:8000 \
-#    clivern/reindeer:release-1.0.0
+#    clivern/reindeer:1.0.0
 
 FROM gradle:4.7.0-jdk8-alpine as builder
 
