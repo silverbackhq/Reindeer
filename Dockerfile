@@ -1,5 +1,5 @@
 # To build
-# $ docker build -t clivern/reindeer:1.0.1 .
+# $ docker build -t clivern/reindeer:1.1.0 .
 #
 # To Run
 # $ docker run -d \
@@ -12,9 +12,9 @@
 #    --env DB_PASSWORD=secret \
 #    --name=reindeer \
 #    --publish 8000:8000 \
-#    clivern/reindeer:1.0.1
+#    clivern/reindeer:1.1.0
 
-FROM gradle:4.10.3-jdk8-alpine as builder
+FROM gradle:6.5.1-jdk11 as builder
 
 COPY --chown=gradle:gradle . /home/gradle/src
 
@@ -22,7 +22,7 @@ WORKDIR /home/gradle/src
 
 RUN ./gradlew build --info
 
-FROM openjdk:8-jre-slim
+FROM openjdk:11.0.8-jre-slim
 
 RUN mkdir -p /app/releases
 RUN mkdir -p /app/configs
@@ -30,14 +30,13 @@ RUN mkdir -p /app/storage
 
 VOLUME /app/storage
 
-# Switch Reingeer to use env vars
 ENV REINDEER_LOAD_FROM=system
 ENV APP_PORT=8000
 ENV DB_DATABASE=/app/storage/db
 
-COPY --from=builder /home/gradle/src/build/libs/reindeer-1.0.1-fat.jar /app/releases/reindeer-1.0.1-fat.jar
+COPY --from=builder /home/gradle/src/build/libs/reindeer-1.1.0-fat.jar /app/releases/reindeer-1.1.0-fat.jar
 COPY --from=builder /home/gradle/src/.env.example /app/configs/.env
 
 EXPOSE 8000
 
-ENTRYPOINT ["java", "-jar", "/app/releases/reindeer-1.0.1-fat.jar", "--env=/app/configs/.env"]
+ENTRYPOINT ["java", "-jar", "/app/releases/reindeer-1.1.0-fat.jar", "--env=/app/configs/.env"]
