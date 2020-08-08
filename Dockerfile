@@ -36,9 +36,9 @@ ENV REINDEER_LOAD_FROM=system
 ENV APP_PORT=8000
 ENV DB_DATABASE=/app/storage/db
 
-COPY --from=builder /home/gradle/src/build/libs/reindeer-0.0.1-fat.jar /app/releases/reindeer-0.0.1-fat.jar
+COPY --from=builder /home/gradle/src/build/libs/reindeer-1.0.0-fat.jar /app/releases/reindeer-1.0.0-fat.jar
 COPY --from=builder /home/gradle/src/.env.example /app/configs/.env
 
 EXPOSE 8000
 
-ENTRYPOINT ["java", "-jar", "/app/releases/reindeer-0.0.1-fat.jar", "--env=/app/configs/.env"]
+ENTRYPOINT ["java", "-jar", "/app/releases/reindeer-1.0.0-fat.jar", "--env=/app/configs/.env"]
