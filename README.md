@@ -85,9 +85,9 @@ $ java -jar build/libs/reindeer-1.0.0-fat.jar --env=/path/to/.env
 ```
 
 
-### Docker:
+### Deployment with Docker:
 
-Build docker images & run container.
+To run from docker image:
 
 ```bash
 $ docker run -d \
