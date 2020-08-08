@@ -14,7 +14,7 @@
 #    --publish 8000:8000 \
 #    clivern/reindeer:1.0.0
 
-FROM gradle:4.7.0-jdk8-alpine as builder
+FROM gradle:4.10.3-jdk8-alpine as builder
 
 COPY --chown=gradle:gradle . /home/gradle/src
 
