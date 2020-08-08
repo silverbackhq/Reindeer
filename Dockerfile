@@ -4,7 +4,6 @@
 # To Run
 # $ docker run -d \
 #    --env APP_PORT=8000 \
-#    --env DB_CONNECTION=8000 \
 #    --env DB_CONNECTION=h2 \
 #    --env DB_HOST=127.0.0.1 \
 #    --env DB_PORT=3306 \
