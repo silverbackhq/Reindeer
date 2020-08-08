@@ -76,9 +76,7 @@ public class ORM {
             settings.put("hibernate.c3p0.acquireRetryDelay", "250");
 
             configuration.setProperties(settings);
-            configuration.addAnnotatedClass(NamespaceEntity.class);
-            configuration.addAnnotatedClass(EndpointEntity.class);
-            configuration.addAnnotatedClass(RequestEntity.class);
+            configuration.addAnnotatedClass(ItemEntity.class);
 
             ServiceRegistry serviceRegistry =
                     new StandardServiceRegistryBuilder()

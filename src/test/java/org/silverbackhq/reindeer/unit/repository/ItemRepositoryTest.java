@@ -24,13 +24,13 @@ import org.silverbackhq.reindeer.TestUtils;
 import org.silverbackhq.reindeer.entity.*;
 import org.silverbackhq.reindeer.repository.*;
 
-/** Namespace Repository Test Cases */
+/** Item Repository Test Cases */
 @ExtendWith(VertxExtension.class)
-public class NamespaceRepositoryTest {
+public class ItemRepositoryTest {
 
-    NamespaceRepository namespaceRepository;
+    ItemRepository itemRepository;
 
-    public NamespaceRepositoryTest() throws Exception {
+    public ItemRepositoryTest() throws Exception {
         TestUtils.init();
     }
 
@@ -38,121 +38,113 @@ public class NamespaceRepositoryTest {
     void test_all(Vertx vertx) {
 
         TestOptions options = new TestOptions().addReporter(new ReportOptions().setTo("console"));
-        TestSuite suite = TestSuite.create(NamespaceRepositoryTest.class.getName());
+        TestSuite suite = TestSuite.create(ItemRepositoryTest.class.getName());
 
         suite.before(
                 context -> {
-                    this.namespaceRepository = new NamespaceRepository();
+                    this.itemRepository = new ItemRepository();
                 });
 
         suite.after(context -> {});
 
         suite.test(
                 String.format(
-                        "%s Test NamespaceRepository::createOne %s",
-                        TestUtils.CYAN, TestUtils.DEFAULT),
+                        "%s Test ItemRepository::createOne %s", TestUtils.CYAN, TestUtils.DEFAULT),
                 context -> {
                     try {
                         context.assertEquals(
-                                this.namespaceRepository.createOne(
-                                        new NamespaceEntity()
-                                                .setName("TestName")
-                                                .setSlug("test_slug")),
+                                this.itemRepository.createOne(
+                                        new ItemEntity().setName("TestName").setSlug("test_slug")),
                                 new Integer(1));
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Error while running NamespaceRepository::createOne test case: %s",
+                                        "Error while running ItemRepository::createOne test case: %s",
                                         e.getMessage()));
                     }
                 });
 
         suite.test(
                 String.format(
-                        "%s Test NamespaceRepository::getMany %s",
-                        TestUtils.CYAN, TestUtils.DEFAULT),
+                        "%s Test ItemRepository::getMany %s", TestUtils.CYAN, TestUtils.DEFAULT),
                 context -> {
                     try {
                         context.assertEquals(
-                                this.namespaceRepository.getMany().get(0).getName(), "TestName");
+                                this.itemRepository.getMany().get(0).getName(), "TestName");
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Error while running NamespaceRepository::getMany test case: %s",
+                                        "Error while running ItemRepository::getMany test case: %s",
                                         e.getMessage()));
                     }
                 });
 
         suite.test(
                 String.format(
-                        "%s Test NamespaceRepository::getOneById %s",
-                        TestUtils.CYAN, TestUtils.DEFAULT),
+                        "%s Test ItemRepository::getOneById %s", TestUtils.CYAN, TestUtils.DEFAULT),
                 context -> {
                     try {
                         context.assertEquals(
-                                this.namespaceRepository.getOneById(new Integer(1)).getName(),
+                                this.itemRepository.getOneById(new Integer(1)).getName(),
                                 "TestName");
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Error while running NamespaceRepository::getOneById test case: %s",
+                                        "Error while running ItemRepository::getOneById test case: %s",
                                         e.getMessage()));
                     }
                 });
 
         suite.test(
                 String.format(
-                        "%s Test NamespaceRepository::getOneBySlug %s",
+                        "%s Test ItemRepository::getOneBySlug %s",
                         TestUtils.CYAN, TestUtils.DEFAULT),
                 context -> {
                     try {
                         context.assertEquals(
-                                this.namespaceRepository.getOneBySlug("test_slug").getName(),
+                                this.itemRepository.getOneBySlug("test_slug").getName(),
                                 "TestName");
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Error while running NamespaceRepository::getOneBySlug test case: %s",
+                                        "Error while running ItemRepository::getOneBySlug test case: %s",
                                         e.getMessage()));
                     }
                 });
 
         suite.test(
                 String.format(
-                        "%s Test NamespaceRepository::update %s",
-                        TestUtils.CYAN, TestUtils.DEFAULT),
+                        "%s Test ItemRepository::update %s", TestUtils.CYAN, TestUtils.DEFAULT),
                 context -> {
                     try {
-                        NamespaceEntity namespaceEntity =
-                                this.namespaceRepository.getOneById(new Integer(1));
-                        namespaceEntity.setName("NewTestName");
+                        ItemEntity itemEntity = this.itemRepository.getOneById(new Integer(1));
+                        itemEntity.setName("NewTestName");
+                        context.assertEquals(this.itemRepository.update(itemEntity), true);
                         context.assertEquals(
-                                this.namespaceRepository.update(namespaceEntity), true);
-                        context.assertEquals(
-                                this.namespaceRepository.getOneBySlug("test_slug").getName(),
+                                this.itemRepository.getOneBySlug("test_slug").getName(),
                                 "NewTestName");
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Error while running NamespaceRepository::update test case: %s",
+                                        "Error while running ItemRepository::update test case: %s",
                                         e.getMessage()));
                     }
                 });
 
         suite.test(
                 String.format(
-                        "%s Test NamespaceRepository::deleteOneById %s",
+                        "%s Test ItemRepository::deleteOneById %s",
                         TestUtils.CYAN, TestUtils.DEFAULT),
                 context -> {
                     try {
                         context.assertEquals(
-                                this.namespaceRepository.deleteOneById(new Integer(1)), true);
+                                this.itemRepository.deleteOneById(new Integer(1)), true);
                         context.assertEquals(
-                                this.namespaceRepository.deleteOneById(new Integer(2)), false);
+                                this.itemRepository.deleteOneById(new Integer(2)), false);
                     } catch (Exception e) {
                         context.fail(
                                 String.format(
-                                        "Error while running NamespaceRepository::deleteOneById test case: %s",
+                                        "Error while running ItemRepository::deleteOneById test case: %s",
                                         e.getMessage()));
                     }
                 });

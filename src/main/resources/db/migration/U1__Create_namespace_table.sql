@@ -1,1 +1,1 @@
-DROP TABLE namespace;
+DROP TABLE item;

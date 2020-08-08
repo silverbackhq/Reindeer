@@ -31,8 +31,8 @@ import org.silverbackhq.reindeer.middleware.Correlation;
 import org.silverbackhq.reindeer.migration.Migrate;
 import org.tinylog.Logger;
 
-/** Main App Class */
-public class App extends AbstractVerticle {
+/** Main Application Class */
+public class Application extends AbstractVerticle {
 
     private Injector injector;
 
@@ -169,7 +169,7 @@ public class App extends AbstractVerticle {
         router.get("/")
                 .handler(
                         context -> {
-                            this.injector.getInstance(HealthController.class).check(vertx, context);
+                            this.injector.getInstance(HomeController.class).index(vertx, context);
                         });
 
         router.get("/_health")
@@ -178,83 +178,39 @@ public class App extends AbstractVerticle {
                             this.injector.getInstance(HealthController.class).check(vertx, context);
                         });
 
-        router.get("/api/v1/namespace")
+        router.get("/api/v1/item")
                 .handler(
                         context -> {
-                            this.injector
-                                    .getInstance(NamespaceController.class)
-                                    .getAll(vertx, context);
+                            this.injector.getInstance(ItemController.class).getAll(vertx, context);
                         });
 
-        router.post("/api/v1/namespace")
+        router.post("/api/v1/item")
                 .handler(
                         context -> {
                             this.injector
-                                    .getInstance(NamespaceController.class)
+                                    .getInstance(ItemController.class)
                                     .createOne(vertx, context);
                         });
 
-        router.get("/api/v1/namespace/:namespaceId")
+        router.get("/api/v1/item/:id")
                 .handler(
                         context -> {
-                            this.injector
-                                    .getInstance(NamespaceController.class)
-                                    .getOne(vertx, context);
+                            this.injector.getInstance(ItemController.class).getOne(vertx, context);
                         });
 
-        router.delete("/api/v1/namespace/:namespaceId")
+        router.delete("/api/v1/item/:id")
                 .handler(
                         context -> {
                             this.injector
-                                    .getInstance(NamespaceController.class)
+                                    .getInstance(ItemController.class)
                                     .deleteOne(vertx, context);
                         });
 
-        router.put("/api/v1/namespace/:namespaceId")
+        router.put("/api/v1/item/:id")
                 .handler(
                         context -> {
                             this.injector
-                                    .getInstance(NamespaceController.class)
-                                    .updateOne(vertx, context);
-                        });
-
-        router.get("/api/v1/namespace/:namespaceId/endpoint")
-                .handler(
-                        context -> {
-                            this.injector
-                                    .getInstance(EndpointController.class)
-                                    .getAll(vertx, context);
-                        });
-
-        router.post("/api/v1/namespace/:namespaceId/endpoint")
-                .handler(
-                        context -> {
-                            this.injector
-                                    .getInstance(EndpointController.class)
-                                    .createOne(vertx, context);
-                        });
-
-        router.get("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
-                .handler(
-                        context -> {
-                            this.injector
-                                    .getInstance(EndpointController.class)
-                                    .getOne(vertx, context);
-                        });
-
-        router.delete("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
-                .handler(
-                        context -> {
-                            this.injector
-                                    .getInstance(EndpointController.class)
-                                    .deleteOne(vertx, context);
-                        });
-
-        router.put("/api/v1/namespace/:namespaceId/endpoint/:endpointId")
-                .handler(
-                        context -> {
-                            this.injector
-                                    .getInstance(EndpointController.class)
+                                    .getInstance(ItemController.class)
                                     .updateOne(vertx, context);
                         });
 

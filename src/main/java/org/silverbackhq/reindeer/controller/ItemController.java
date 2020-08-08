@@ -13,19 +13,32 @@
  */
 package org.silverbackhq.reindeer.controller;
 
+import com.google.inject.Inject;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
 import org.silverbackhq.reindeer.daemon.Worker;
+import org.silverbackhq.reindeer.repository.ItemRepository;
 import org.silverbackhq.reindeer.task.Log;
 import org.silverbackhq.reindeer.util.ContentType;
 import org.silverbackhq.reindeer.util.JSON;
 import org.silverbackhq.reindeer.util.StatusCode;
 
-/** EndpointController Class */
-public class EndpointController {
+/** ItemController Class */
+public class ItemController {
+
+    private ItemRepository itemRepository;
 
     /**
-     * Get namespace endpoints endpoint action
+     * Class Constructor
+     *
+     * @param itemRepository an instance of ItemRepository
+     */
+    @Inject
+    public ItemController(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
+    /**
+     * Get items endpoint action
      *
      * @param context request object
      * @param vertx an instance of Vertx
@@ -36,88 +49,64 @@ public class EndpointController {
                         Worker.class.getName(),
                         new JSON().put("task", Log.class.getName()).toString());
 
-        String namespaceId = context.request().getParam("namespaceId");
         context.response()
                 .setStatusCode(StatusCode.OK)
                 .putHeader("content-type", ContentType.JSON)
-                .end(new JSON().put("action", "getAll").put("namespaceId", namespaceId).toString());
+                .end(new JSON().put("action", "getAll").toString());
     }
 
-    /**
-     * Create namespace endpoint endpoint action
+    /*
+     * Create item endpoint action
      *
      * @param context request object
      * @param vertx an instance of Vertx
      */
     public void createOne(Vertx vertx, RoutingContext context) {
-        String namespaceId = context.request().getParam("namespaceId");
         context.response()
                 .setStatusCode(StatusCode.OK)
                 .putHeader("content-type", ContentType.JSON)
-                .end(
-                        new JSON()
-                                .put("action", "createOne")
-                                .put("namespaceId", namespaceId)
-                                .toString());
+                .end(new JSON().put("action", "createOne").toString());
     }
 
     /**
-     * Get namespace endpoint endpoint action
+     * Get item endpoint action
      *
      * @param context request object
      * @param vertx an instance of Vertx
      */
     public void getOne(Vertx vertx, RoutingContext context) {
-        String namespaceId = context.request().getParam("namespaceId");
-        String endpointId = context.request().getParam("endpointId");
+        String id = context.request().getParam("id");
         context.response()
                 .setStatusCode(StatusCode.OK)
                 .putHeader("content-type", ContentType.JSON)
-                .end(
-                        new JSON()
-                                .put("action", "getOne")
-                                .put("namespaceId", namespaceId)
-                                .put("endpointId", endpointId)
-                                .toString());
+                .end(new JSON().put("action", "getOne").put("id", id).toString());
     }
 
     /**
-     * Delete namespace endpoint endpoint action
+     * Delete item endpoint action
      *
      * @param context request object
      * @param vertx an instance of Vertx
      */
     public void deleteOne(Vertx vertx, RoutingContext context) {
-        String namespaceId = context.request().getParam("namespaceId");
-        String endpointId = context.request().getParam("endpointId");
+        String id = context.request().getParam("id");
         context.response()
                 .setStatusCode(StatusCode.OK)
                 .putHeader("content-type", ContentType.JSON)
-                .end(
-                        new JSON()
-                                .put("action", "deleteOne")
-                                .put("namespaceId", namespaceId)
-                                .put("endpointId", endpointId)
-                                .toString());
+                .end(new JSON().put("action", "deleteOne").put("id", id).toString());
     }
 
     /**
-     * Update namespace endpoint endpoint action
+     * Update item endpoint action
      *
      * @param context request object
      * @param vertx an instance of Vertx
      */
     public void updateOne(Vertx vertx, RoutingContext context) {
-        String namespaceId = context.request().getParam("namespaceId");
-        String endpointId = context.request().getParam("endpointId");
+        String id = context.request().getParam("id");
         context.response()
                 .setStatusCode(StatusCode.OK)
                 .putHeader("content-type", ContentType.JSON)
-                .end(
-                        new JSON()
-                                .put("action", "updateOne")
-                                .put("namespaceId", namespaceId)
-                                .put("endpointId", endpointId)
-                                .toString());
+                .end(new JSON().put("action", "updateOne").put("id", id).toString());
     }
 }

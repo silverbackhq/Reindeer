@@ -34,7 +34,8 @@ public class AppTest {
     @BeforeEach
     @DisplayName("Deploy a verticle")
     void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
-        vertx.deployVerticle(new App(), testContext.succeeding(id -> testContext.completeNow()));
+        vertx.deployVerticle(
+                new Application(), testContext.succeeding(id -> testContext.completeNow()));
     }
 
     @Test

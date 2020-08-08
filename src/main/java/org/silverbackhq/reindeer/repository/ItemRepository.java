@@ -19,105 +19,104 @@ import org.hibernate.Session;
 import org.silverbackhq.reindeer.entity.*;
 import org.silverbackhq.reindeer.migration.ORM;
 
-/** Namespace Repository Class */
-public class NamespaceRepository {
+/** Item Repository Class */
+public class ItemRepository {
 
     /**
-     * Create a new namespace item
+     * Create a new item item
      *
-     * @param namespaceEntity the namespace entity
-     * @return the new namespace ID
+     * @param itemEntity the item entity
+     * @return the new item ID
      * @throws Exception if there is error raised
      */
-    public Integer createOne(NamespaceEntity namespaceEntity) throws Exception {
+    public Integer createOne(ItemEntity itemEntity) throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
-        Integer id = (Integer) session.save(namespaceEntity);
+        Integer id = (Integer) session.save(itemEntity);
         session.getTransaction().commit();
 
         return id;
     }
 
     /**
-     * Get All Namespaces
+     * Get All Items
      *
-     * @return a list of all namespaces
+     * @return a list of all items
      * @throws Exception if there is error raised
      */
-    public List<NamespaceEntity> getMany() throws Exception {
+    public List<ItemEntity> getMany() throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
         Query query =
-                session.createQuery(
-                        String.format("from %s", NamespaceEntity.class.getSimpleName()));
-        List<NamespaceEntity> list = query.list();
+                session.createQuery(String.format("from %s", ItemEntity.class.getSimpleName()));
+        List<ItemEntity> list = query.list();
         session.getTransaction().commit();
 
         return list;
     }
 
     /**
-     * Get namespace by id
+     * Get item by id
      *
-     * @param id the namespace id
-     * @return the namespace entity
+     * @param id the item id
+     * @return the item entity
      * @throws Exception if there is error raised
      */
-    public NamespaceEntity getOneById(Integer id) throws Exception {
+    public ItemEntity getOneById(Integer id) throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
-        NamespaceEntity namespaceEntity = session.get(NamespaceEntity.class, id);
+        ItemEntity itemEntity = session.get(ItemEntity.class, id);
         session.getTransaction().commit();
 
-        return namespaceEntity;
+        return itemEntity;
     }
 
     /**
-     * Get namespace by slug
+     * Get item by slug
      *
-     * @param slug the namespace slug
-     * @return the namespace entity
+     * @param slug the item slug
+     * @return the item entity
      * @throws Exception if there is error raised
      */
-    public NamespaceEntity getOneBySlug(String slug) throws Exception {
+    public ItemEntity getOneBySlug(String slug) throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
         Query query =
                 session.createQuery(
                         String.format(
-                                "from %s where slug=:slug", NamespaceEntity.class.getSimpleName()));
+                                "from %s where slug=:slug", ItemEntity.class.getSimpleName()));
         query.setParameter("slug", slug);
-        NamespaceEntity namespaceEntity = (NamespaceEntity) query.uniqueResult();
+        ItemEntity itemEntity = (ItemEntity) query.uniqueResult();
         session.getTransaction().commit();
 
-        return namespaceEntity;
+        return itemEntity;
     }
 
     /**
-     * Update namespace
+     * Update item
      *
-     * @param namespaceEntity the namespace entity
+     * @param itemEntity the item entity
      * @return whether updated or not
      * @throws Exception if there is error raised
      */
-    public Boolean update(NamespaceEntity namespaceEntity) throws Exception {
+    public Boolean update(ItemEntity itemEntity) throws Exception {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
-        session.update(namespaceEntity);
+        session.update(itemEntity);
         session.getTransaction().commit();
 
         return true;
     }
 
     /**
-     * Delete a namespace by id
+     * Delete a item by id
      *
-     * @param id the namespace id
+     * @param id the item id
      * @return whether deleted or not
      * @throws Exception if there is error raised
      */
@@ -125,10 +124,10 @@ public class NamespaceRepository {
 
         Session session = ORM.getSessionFactory().openSession();
         session.beginTransaction();
-        NamespaceEntity namespaceEntity = session.get(NamespaceEntity.class, id);
+        ItemEntity itemEntity = session.get(ItemEntity.class, id);
 
-        if (namespaceEntity != null) {
-            session.delete(namespaceEntity);
+        if (itemEntity != null) {
+            session.delete(itemEntity);
             session.getTransaction().commit();
             return true;
         }

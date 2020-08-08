@@ -25,9 +25,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "namespace")
+@Table(name = "item")
 @DynamicUpdate
-public class NamespaceEntity {
+public class ItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,7 +99,7 @@ public class NamespaceEntity {
      * @param id the id column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setId(Integer id) {
+    public ItemEntity setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -110,7 +110,7 @@ public class NamespaceEntity {
      * @param name the name column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setName(String name) {
+    public ItemEntity setName(String name) {
         this.name = name;
         return this;
     }
@@ -121,7 +121,7 @@ public class NamespaceEntity {
      * @param slug the slug column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setSlug(String slug) {
+    public ItemEntity setSlug(String slug) {
         this.slug = slug;
         return this;
     }
@@ -132,7 +132,7 @@ public class NamespaceEntity {
      * @param createdAt the created_at column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setCreatedAt(Timestamp createdAt) {
+    public ItemEntity setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -143,7 +143,7 @@ public class NamespaceEntity {
      * @param updatedAt the updated_at column value
      * @return an instance of the entity
      */
-    public NamespaceEntity setUpdatedAt(Timestamp updatedAt) {
+    public ItemEntity setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }

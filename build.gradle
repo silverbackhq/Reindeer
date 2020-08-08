@@ -30,7 +30,7 @@ spotless {
 }
 
 group = 'org.silverbackhq'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 repositories {
     mavenCentral()
@@ -57,7 +57,7 @@ application {
 
 sourceCompatibility = '1.8'
 
-def mainVerticleName = 'org.silverbackhq.reindeer.App'
+def mainVerticleName = 'org.silverbackhq.reindeer.Application'
 def watchForChange = 'src/**/*'
 def doOnChange = './gradlew classes'
 
