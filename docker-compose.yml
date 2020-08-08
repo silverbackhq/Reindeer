@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+    # Reindeer Service
+    reindeer:
+        image: 'clivern/reindeer:1.0.1'
+        environment:
+            - APP_PORT=8000
+            - DB_CONNECTION=h2
+            - DB_HOST=127.0.0.1
+            - DB_PORT=3306
+            - DB_DATABASE=/app/storage/db
+            - DB_USERNAME=root
+            - DB_PASSWORD=secret
+        ports:
+            - '8000:8000'
+        volumes:
+            - 'reindeer_data:/app/storage'
+        restart: unless-stopped
+
+volumes:
+    reindeer_data: null

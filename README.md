@@ -103,6 +103,12 @@ $ docker run -d \
     clivern/reindeer:1.0.1
 ```
 
+Or with docker compose
+
+```bash
+$ docker-compose up -d
+```
+
 
 ## Versioning
 
