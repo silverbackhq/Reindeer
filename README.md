@@ -5,7 +5,8 @@
     <p align="center">Reactive Applications Boilerplate in Java.</p>
     <p align="center">
         <a href="https://travis-ci.org/silverbackhq/Reindeer"><img src="https://travis-ci.org/silverbackhq/Reindeer.svg?branch=master"></a>
-            <a href="https://github.com/silverbackhq/Reindeer/releases"><img src="https://img.shields.io/badge/Version-0.0.1-blue.svg"></a>
+        <a href="https://github.com/silverbackhq/Reindeer/releases"><img src="https://img.shields.io/badge/Version-1.0.0-blue.svg"></a>
+        <a href="https://hub.docker.com/r/clivern/reindeer"><img src="https://img.shields.io/badge/Docker-Latest-orange"></a>
         <a href="https://github.com/silverbackhq/Reindeer/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-Apache_2.0-orange.svg"></a>
     </p>
 </p>
@@ -31,14 +32,14 @@ APP_NAME=Reindeer
 APP_KEY=
 APP_DEBUG=true
 APP_URL=http://localhost
-APP_PORT=8888
+APP_PORT=8000
 
 APP_AUTH_TOKEN=
 
 DB_CONNECTION=h2
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=/path/to/db
+DB_DATABASE=./storage/db
 DB_USERNAME=root
 DB_PASSWORD=secret
 
@@ -80,7 +81,27 @@ You can build and run the jar like this:
 ```bash
 $ make build
 
-$ java -jar build/libs/reindeer-0.0.1-fat.jar --env=/path/to/.env
+$ java -jar build/libs/reindeer-1.0.0-fat.jar --env=/path/to/.env
+```
+
+
+### Docker:
+
+Build docker images & run container.
+
+```bash
+$ docker run -d \
+    --env APP_PORT=8000 \
+    --env DB_CONNECTION=8000 \
+    --env DB_CONNECTION=h2 \
+    --env DB_HOST=127.0.0.1 \
+    --env DB_PORT=3306 \
+    --env DB_DATABASE=/app/storage/db \
+    --env DB_USERNAME=root \
+    --env DB_PASSWORD=secret \
+    --name=reindeer \
+    --publish 8000:8000 \
+    clivern/reindeer:release-1.0.0
 ```
 
 
