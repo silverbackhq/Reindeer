@@ -124,7 +124,7 @@ public class Config {
         if (Config.loadFromConfig()) {
             return this.env.get(variable);
         } else {
-            return System.getenv(String.format("REINDEER_%s", variable));
+            return System.getenv(variable);
         }
     }
 }
