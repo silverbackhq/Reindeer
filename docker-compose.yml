@@ -4,7 +4,7 @@ services:
 
     # Reindeer Service
     reindeer:
-        image: 'clivern/reindeer:1.1.1'
+        image: 'clivern/reindeer:1.1.2'
         environment:
             - APP_PORT=8000
             - DB_CONNECTION=h2
