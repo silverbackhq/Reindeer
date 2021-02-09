@@ -48,7 +48,7 @@ ext {
     clivernKangarooVersion = '0.0.1'
     tinylogVersion = '2.2.1'
     mysqlConnectorVersion = '8.0.23'
-    hibernateVersion = '5.4.27.Final'
+    hibernateVersion = '5.4.28.Final'
 }
 
 application {
