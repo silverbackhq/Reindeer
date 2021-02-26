@@ -14,7 +14,7 @@
 #    --publish 8000:8000 \
 #    clivern/reindeer:1.1.2
 
-FROM gradle:6.8.2-jdk11 as builder
+FROM gradle:6.8.3-jdk11 as builder
 
 COPY --chown=gradle:gradle . /home/gradle/src
 
