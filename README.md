@@ -4,8 +4,8 @@
     <h3 align="center">Reindeer</h3>
     <p align="center">Reactive Applications Boilerplate in Java.</p>
     <p align="center">
-        <a href="https://travis-ci.org/silverbackhq/Reindeer"><img src="https://travis-ci.org/silverbackhq/Reindeer.svg?branch=master"></a>
-        <a href="https://github.com/silverbackhq/Reindeer/releases"><img src="https://img.shields.io/badge/Version-1.1.2-blue.svg"></a>
+        <a href="https://github.com/silverbackhq/Reindeer/actions/workflows/ci.yml"><img src="https://github.com/silverbackhq/Reindeer/actions/workflows/ci.yml/badge.svg"></a>
+        <a href="https://github.com/silverbackhq/Reindeer/releases"><img src="https://img.shields.io/badge/Version-1.1.3-blue.svg"></a>
         <a href="https://hub.docker.com/r/clivern/reindeer"><img src="https://img.shields.io/badge/Docker-Latest-orange"></a>
         <a href="https://github.com/silverbackhq/Reindeer/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-Apache_2.0-orange.svg"></a>
     </p>
@@ -81,7 +81,7 @@ You can build and run the jar like this:
 ```bash
 $ make build
 
-$ java -jar build/libs/reindeer-1.1.2-fat.jar --env=/path/to/.env
+$ java -jar build/libs/reindeer-1.1.3-fat.jar --env=/path/to/.env
 ```
 
 
@@ -100,7 +100,7 @@ $ docker run -d \
     --env DB_PASSWORD=secret \
     --name=reindeer \
     --publish 8000:8000 \
-    clivern/reindeer:1.1.2
+    clivern/reindeer:1.1.3
 ```
 
 Or with docker compose
