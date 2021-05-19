@@ -40,7 +40,7 @@ ext {
     junitJupiterEngineVersion = '5.7.2'
     vertxVersion = '3.9.7'
     javaDotenvVersion = '5.2.2'
-    flywayCoreVersion = '7.9.0'
+    flywayCoreVersion = '7.9.1'
     h2Version = '1.4.200'
     googleJsonSimpleVersion = '1.1.1'
     googleGsonVersion = '2.8.6'
