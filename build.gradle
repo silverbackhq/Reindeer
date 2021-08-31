@@ -38,7 +38,7 @@ repositories {
 
 ext {
     junitJupiterEngineVersion = '5.7.2'
-    vertxVersion = '3.9.8'
+    vertxVersion = '4.1.3'
     javaDotenvVersion = '5.2.2'
     flywayCoreVersion = '7.14.0'
     h2Version = '1.4.200'
