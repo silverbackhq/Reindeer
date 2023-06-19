@@ -22,7 +22,7 @@ WORKDIR /home/gradle/src
 
 RUN ./gradlew build --info
 
-FROM openjdk:11.0.15-jre-slim
+FROM openjdk:11.0.16-jre-slim
 
 RUN mkdir -p /app/releases
 RUN mkdir -p /app/configs
