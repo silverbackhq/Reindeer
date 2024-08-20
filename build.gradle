@@ -17,7 +17,7 @@ plugins {
     id 'application'
     id 'jacoco'
     id 'com.diffplug.gradle.spotless' version '4.5.1'
-    id 'com.github.johnrengelman.shadow' version '7.1.1'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 spotless {
